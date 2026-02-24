@@ -8,12 +8,12 @@
   display: flex;
   justify-content: flex-end; /* changed from center to the right side */
   align-items: center;
-  padding-right: 60px; /* added padding sa right */
+  padding-right: 100px; /* added padding sa right */
 }
 
 .login-card {
   background: rgb(245, 236, 236);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(50px);
   border-radius: 45px;
   padding: 40px 30px;
   width: 100%;
@@ -31,7 +31,7 @@
 .login-card h1 {
   margin-top: 0;
   margin-bottom: 5px;
-  color: #070707;
+  color: #f5ebeb;
   font-size: 24px;
   font-family: Arial, Helvetica, sans-serif;
   background: transparent;
@@ -40,14 +40,14 @@
 .subtitle {
   margin-top: 0;
   margin-bottom: 25px;
-  color: rgb(15, 14, 14);
+  color: rgb(242, 236, 236);
   font-size: large;
 }
 
 .input-group {
   display: flex;
   align-items: center;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(247, 242, 242, 0.945);
   border-radius: 8px;
   padding: 10px 12px;
   margin-bottom: 15px;
@@ -56,7 +56,7 @@
 .input-group .icon {
   margin-right: 10px;
   font-size: 20px;
-  color: rgb(16, 15, 15);
+  color: rgb(244, 240, 240);
 }
 
 .input-group input {
@@ -72,7 +72,7 @@
   padding: 12px;
   border: none;
   border-radius: 8px;
-  background: #262f58;
+  background: #385bf3;
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -82,7 +82,7 @@
 
 .login-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 15px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 8px 15px rgba(244, 244, 247, 0.2);
 }
 
 .logo-container {
@@ -90,11 +90,22 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 20px;
+  width: 100%;
+}
+
+.login-header {
+  display: flex;
+  flex-direction: column; /* THIS MAKES IT VERTICAL */
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .logo {
-  width: 100px;
+  width: 120px;
   height: auto;
-  object-fit: contain;
-  height: auto;
+  margin-bottom: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }

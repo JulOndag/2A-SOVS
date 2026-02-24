@@ -5,25 +5,24 @@
         <img src="/logo.png" alt="logo" class="USTP logo" />
         <div>
           <h1>Election System</h1>
+          <form (ngSubmit)="login()">
+            <p class="subtitle">Login to your account</p>
+            <div class="input-group">
+              <span class="icon">📧</span>
+              <input type="email" placeholder="Email" />
+            </div>
 
-          <p class="subtitle">Login to your account</p>
+            <div class="input-group">
+              <span class="icon">🔒</span>
+              <input type="password" placeholder="Password" />
+            </div>
 
-          <div class="input-group">
-            <span class="icon">📧</span>
-            <input type="email" placeholder="Email" />
-          </div>
-
-          <div class="input-group">
-            <span class="icon">🔒</span>
-            <input type="password" placeholder="Password" />
-          </div>
-
-          <button type="submit" class="login-btn">Login</button>
+            <button type="submit" class="login-btn">Login</button>
+          </form>
+          <div class="background"></div>
         </div>
-        <div class="background"></div>
+        <div></div>
       </div>
-
-      <div></div>
     </div>
   </div>
 </div>
