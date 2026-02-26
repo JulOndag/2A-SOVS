@@ -12,20 +12,15 @@
 }
 
 .login-card {
-  background: rgb(245, 236, 236);
-  backdrop-filter: blur(10px);
+  background: white; /* solid color */
   border-radius: 45px;
   padding: 40px 30px;
   width: 100%;
   max-width: 380px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(243, 236, 236, 0.897);
-  text-align: center;
-  border: 1px solid rgba(241, 229, 229, 0.97);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  border: 1px solid #ddd;
   font-family: sans-serif;
-  align-items: center;
-  background: fixed;
-  flex-direction: column;
 }
 
 .login-card h1 {
