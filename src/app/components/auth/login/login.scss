@@ -1,16 +1,17 @@
 .login-container {
   height: 100vh;
   width: 100%;
-  background-image: url('/low.jpg');
-  background-size: cover;
-  background-position: center;
+  background-image: url('/oks.png'); /* change if inside assets */
+  background-size:100%;
+  background-position: bottom;
   background-repeat: no-repeat;
   display: flex;
-  justify-content: end; /* changed from center to the right side */
+  justify-content: flex-end; /* pushes card to right */
   align-items: center;
+  padding-right: 180px; /* space from right edge */
 }
 
-/* LOGIN CARD */
+
 .login-card {
   width: 100%;
   max-width: 400px;
