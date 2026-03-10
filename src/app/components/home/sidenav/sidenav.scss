@@ -22,9 +22,34 @@
   padding:12px;
   border-radius:6px;
   cursor:pointer;
-  margin-bottom:10px;
+  margin-bottom:20px;
+  justify-content: center;
+  
 }
 
 .nav-links li:hover{
   background:#2e4f7f;
+}
+
+/* Logout button styling */
+.logout-btn {
+  background-color: #1f3c64; /* Red color for logout */
+  border: none;
+  padding: 15px 70px;
+  border-radius: 5px;;
+  color: #fff;
+  border: 1px solid #e0e0e0;
+  cursor: pointer;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  justify-content: center;
+
+  margin-top: 350px; /* Push the logout button to the bottom */
+  margin-left: 0; 
+}
+
+.logout-btn:hover {
+  background-color: #5c5091;
 }

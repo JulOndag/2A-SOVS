@@ -1,7 +1,7 @@
 /* Style for the topbar */
 .topbar {
   background-color: #415972; /* Dark Blue background */
-  padding: 15px 30px;
+  padding: 20px 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -26,23 +26,6 @@
   align-items: center;
 }
 
-/* Logout button styling */
-.logout-btn {
-  background-color: #07002f; /* Red color for logout */
-  border: none;
-  padding: 10px 15px;
-  border-radius: 25px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 10px;
-  display: flex;
-  align-items: center;
-  transition: background-color 0.3s ease;
-}
-
-.logout-btn:hover {
-  background-color: #5c5091;
-}
 
 /* Icon inside the button */
 .icon {
