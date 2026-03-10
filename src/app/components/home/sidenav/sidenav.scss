@@ -1,0 +1,30 @@
+.sidenav{
+  width:220px;
+  height:100vh;
+  background:#1f3c64;
+  color:white;
+  padding:20px;
+  position:fixed;
+  left:0;
+  top:0;
+}
+
+.logo{
+  margin-bottom:40px;
+}
+
+.nav-links{
+  list-style:none;
+  padding:0;
+}
+
+.nav-links li{
+  padding:12px;
+  border-radius:6px;
+  cursor:pointer;
+  margin-bottom:10px;
+}
+
+.nav-links li:hover{
+  background:#2e4f7f;
+}

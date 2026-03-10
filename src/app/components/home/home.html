@@ -1,35 +1,39 @@
-<div class="dashboard-layout">
+<div class="layout">
 
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <h2 class="logo">VES</h2>
+  <!-- SIDENAV -->
+  <app-sidenav></app-sidenav>
 
-    <nav>
-      <ul>
-        <li routerLink="/dashboard" routerLinkActive="active">🏠 Dashboard</li>
-        <li>🗳 Manage Elections</li>
-        <li>👥 Candidates</li>
-        <li>🧑‍🎓 Voters</li>
-        <li>📊 Results</li>
-      </ul>
-    </nav>
-  </aside>
+  <div class="main">
 
-  <!-- Main Content -->
-  <div class="main-content">
+    <!-- TOPBAR -->
+    <app-topbar></app-topbar>
 
-    <!-- Topbar -->
-    <header class="topbar">
-      <h1>Dashboard</h1>
-      <button class="logout-btn" routerLink="/login">Logout</button>
-    </header>
+    <!-- DASHBOARD CONTENT -->
+    <div class="dashboard-content">
 
-    <!-- Page Content -->
-    <div class="content">
-      <h2>Welcome to the Voting & Election System</h2>
-      <p>Manage elections, candidates, and voters here.</p>
+      <h2>Dashboard</h2>
+
+      <div class="cards">
+
+        <div class="card">
+          <h3>Total Candidates</h3>
+          <p>10</p>
+        </div>
+
+        <div class="card">
+          <h3>Positions</h3>
+          <p>5</p>
+        </div>
+
+        <div class="card">
+          <h3>Your Voting Status</h3>
+          <p>Not Voted</p>
+        </div>
+
+      </div>
+
     </div>
 
   </div>
-</div>
 
+</div>

@@ -1,1 +1,16 @@
-<p>sidenav works!</p>
+<nav class="sidenav">
+
+  <h2 class="logo">E-Voting</h2>
+
+  <ul class="nav-links">
+    <!-- ROUTING WILL GO HERE -->
+    <li routerLink="/dashboard">Dashboard</li>
+    <li routerLink="/ballot">Ballot</li>
+    <li routerLink="/candidates">Candidates</li>
+    <li routerLink="/profile">Profile</li>
+    <button (click)="logout()" class="logout-btn">
+    <span class="icon">🔓</span> Logout
+  </button>
+  </ul>
+
+</nav>
