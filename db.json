@@ -8,9 +8,20 @@
     },
     {
       "id": 2,
-      "email": 2024300753,
+      "email": "2024300753",
       "password": "student123",
       "role": "student"
     }
+  ],
+
+  "voters": [
+    { "id": 1, "name": "John", "voted": true },
+    { "id": 2, "name": "Anna", "voted": false },
+    { "id": 3, "name": "Peter", "voted": true }
+  ],
+
+  "candidates": [
+    { "id": 1, "name": "Candidate A" },
+    { "id": 2, "name": "Candidate B" }
   ]
 }

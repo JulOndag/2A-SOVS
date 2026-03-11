@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './sidenav.html',
   styleUrl: './sidenav.scss',
 })
 export class Sidenav {
 
   constructor(private router: Router) {}
+
+  goToCandidate(): void {
+    this.router.navigate(['/candidate']);
+  }
 
   logout(): void {
     localStorage.removeItem('user');
