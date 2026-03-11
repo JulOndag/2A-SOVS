@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-candidate',
+  selector: 'app-result',
   imports: [RouterModule],
-  templateUrl: './candidates.html',
-  styleUrl: './candidates.scss',
+  templateUrl: './result.html',
+  styleUrl: './result.scss',
 })
-export class Candidate {
+export class Result {
 
   constructor(private router: Router) {}
 

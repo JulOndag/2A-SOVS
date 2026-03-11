@@ -15,6 +15,10 @@ export class Sidenav {
     this.router.navigate(['/candidate']);
   }
 
+  goToResult(): void {
+    this.router.navigate(['/result']);
+  }
+
   logout(): void {
     localStorage.removeItem('user');
     localStorage.removeItem('isLoggedIn');
