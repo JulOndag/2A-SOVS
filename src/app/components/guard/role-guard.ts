@@ -9,14 +9,13 @@ export class RoleGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-
     const requiredRole = route.data['role'];
 
     if (user.role === requiredRole) {
       return true;
     }
 
-    // if not admin → redirect
+    // redirect if not allowed
     this.router.navigate(['/home']);
     return false;
   }
