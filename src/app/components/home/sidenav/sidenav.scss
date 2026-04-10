@@ -1,42 +1,40 @@
-.sidenav{
-  width:220px;
-  height:100vh;
-  background:#1f3c64;
-  color:white;
-  padding:20px;
-  position:fixed;
-  left:0;
-  top:0;
+.sidenav {
+  width: 220px;
+  height: 100vh;
+  background: #1f3c64;
+  color: white;
+  padding: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
 }
 
-.logo{
-  margin-bottom:40px;
+.logo {
+  margin-bottom: 40px;
 }
 
-.nav-links{
-  list-style:none;
-  padding:0;
+.nav-links {
+  list-style: none;
+  padding: 0;
 }
 
-.nav-links li{
-  padding:12px;
-  border-radius:6px;
-  cursor:pointer;
-  margin-bottom:20px;
+.nav-links li {
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
   justify-content: center;
-  
 }
 
-.nav-links li:hover{
-  background:#2e4f7f;
+.nav-links li:hover {
+  background: #2e4f7f;
 }
 
-/* Logout button styling */
 .logout-btn {
-  background-color: #1f3c64; /* Red color for logout */
+  background-color: #1f3c64;
   border: none;
   padding: 15px 69px;
-  border-radius: 5px;;
+  border-radius: 5px;
   color: #fff;
   border: 1px solid #e0e0e0;
   cursor: pointer;
@@ -45,9 +43,8 @@
   align-items: center;
   transition: background-color 0.3s ease;
   justify-content: center;
-
-  margin-top: 400px; /* Push the logout button to the bottom */
-  margin-left: 0; 
+  margin-top: 400px;
+  margin-left: 0;
 }
 
 .logout-btn:hover {

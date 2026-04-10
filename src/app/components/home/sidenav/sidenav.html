@@ -2,14 +2,25 @@
 
   <h2 class="logo">E-Voting</h2>
 
-  <ul class="nav-links">
-    <!-- ROUTING WILL GO HERE -->
-    <li routerLink="/home">Dashboard</li>
-    <li routerLink="/candidates" routerLinkActive="active">Candidates</li>
-    <li routerLink="/result" routerLinkActive="active">Result</li>
-    <button (click)="logout()" class="logout-btn">
+  <!-- User Nav -->
+  <ul class="nav-links" *ngIf="isUser()">
+    <li routerLink="/home/dashboard" routerLinkActive="active">Dashboard</li>
+    <li routerLink="/home/candidates" routerLinkActive="active">Candidates</li>
+    <li routerLink="/home/ballot" routerLinkActive="active">Ballot</li>
+    <li routerLink="/home/result" routerLinkActive="active">Result</li>
+  </ul>
+
+  <!-- Admin Nav -->
+  <ul class="nav-links" *ngIf="isAdmin()">
+    <li routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</li>
+    <li routerLink="/admin/candidates" routerLinkActive="active">Manage Candidates</li>
+    <li routerLink="/admin/voters" routerLinkActive="active">Manage Voters</li>
+    <li routerLink="/admin/results" routerLinkActive="active">Results</li>
+    <li routerLink="/admin/settings" routerLinkActive="active">Settings</li>
+  </ul>
+
+  <button (click)="logout()" class="logout-btn">
     <span class="icon">🔓</span> Logout
   </button>
-  </ul>
 
 </nav>

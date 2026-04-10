@@ -1,6 +1,5 @@
-/* Style for the topbar */
 .topbar {
-  background-color: #415972; /* Dark Blue background */
+  background-color: #415972;
   padding: 20px 30px;
   display: flex;
   align-items: center;
@@ -9,7 +8,6 @@
   font-family: 'Arial', sans-serif;
 }
 
-/* Container inside the topbar */
 .topbar-content {
   display: flex;
   align-items: center;
@@ -17,17 +15,14 @@
   justify-content: space-between;
 }
 
-/* Title styling */
 .title {
-  color: #000000; /* Light color for contrast */
+  color: #000000;
   margin: 0;
   font-size: 1.8em;
   display: flex;
   align-items: center;
 }
 
-
-/* Icon inside the button */
 .icon {
   margin-right: 8px;
   font-size: 1.2em;

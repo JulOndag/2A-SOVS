@@ -1,28 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sidenav',
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './sidenav.html',
   styleUrl: './sidenav.scss',
 })
-export class Sidenav {
+export class Sidenav implements OnInit {
+
+  role: string = '';
 
   constructor(private router: Router) {}
 
-  goToCandidate(): void {
-    this.router.navigate(['/candidate']);
+  ngOnInit(): void {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.role = user?.role || '';
   }
 
-  goToResult(): void {
-    this.router.navigate(['/result']);
+  isUser(): boolean {
+    return this.role === 'user';
+  }
+
+  isAdmin(): boolean {
+    return this.role === 'admin';
   }
 
   logout(): void {
     localStorage.removeItem('user');
     localStorage.removeItem('isLoggedIn');
-
     this.router.navigate(['/login']);
   }
 }

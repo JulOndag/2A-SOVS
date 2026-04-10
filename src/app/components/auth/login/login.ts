@@ -18,10 +18,7 @@ export class LoginComponent {
   error: string | null = null;
   loading = false;
 
-  constructor(
-    private auth: Auth,
-    private router: Router,
-  ) {}
+  constructor(private auth: Auth, private router: Router,) {}
 
   login() {
     this.error = null;
@@ -51,7 +48,12 @@ export class LoginComponent {
             showConfirmButton: false,
           });
 
-          setTimeout(() => this.router.navigate(['/home']), 1500);
+          setTimeout(() => {if (user.role === 'admin') {
+            this.router.navigate(['/admin']);
+        } else {
+            this.router.navigate(['/home']);
+          }
+          }, 1500);
         } else {
           this.error = 'Invalid email or password';
         }
