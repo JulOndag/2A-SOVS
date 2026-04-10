@@ -3,26 +3,16 @@ import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
+  standalone: true,
   imports: [RouterModule],
   templateUrl: './sidenav.html',
-  styleUrl: './sidenav.scss',
+  styleUrls: ['./sidenav.scss'],
 })
 export class Sidenav {
-
   constructor(private router: Router) {}
 
-  goToCandidate(): void {
-    this.router.navigate(['/candidate']);
-  }
-
-  goToResult(): void {
-    this.router.navigate(['/result']);
-  }
-
-  logout(): void {
-    localStorage.removeItem('user');
-    localStorage.removeItem('isLoggedIn');
-
+  logout() {
+    console.log('Logout clicked');
     this.router.navigate(['/login']);
   }
 }

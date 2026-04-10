@@ -1,15 +1,18 @@
-<nav class="sidenav">
+<div class="sidenav">
+  <div class="logo-section">
+    <img src="assets/logo.png" alt="Logo" />
+    <h2>USTP</h2>
+    <span>Villanueva</span>
+  </div>
 
-  <h2 class="logo">E-Voting</h2>
-
-  <ul class="nav-links">
-    <!-- ROUTING WILL GO HERE -->
-    <li routerLink="/home">Dashboard</li>
-    <li routerLink="/candidates" routerLinkActive="active">Candidates</li>
-    <li routerLink="/result" routerLinkActive="active">Result</li>
-    <button (click)="logout()" class="logout-btn">
-    <span class="icon">🔓</span> Logout
-  </button>
-  </ul>
-
-</nav>
+  <nav>
+    <ul>
+      <li routerLink="/admin/dashboard" routerLinkActive="active">📊 Dashboard</li>
+      <li routerLink="/admin/election" routerLinkActive="active">🗳 Election</li>
+      <li routerLink="/admin/voters" routerLinkActive="active">👥 Voters</li>
+      <li routerLink="/admin/results" routerLinkActive="active">📈 Results</li>
+      <li routerLink="/admin/activitylogs" routerLinkActive="active">📋 Activity Log</li>
+      <li routerLink="/admin/candidates" routerLinkActive="active">👤 Candidates</li>
+    </ul>
+  </nav>
+</div>

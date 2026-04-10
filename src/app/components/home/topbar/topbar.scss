@@ -1,34 +1,62 @@
-/* Style for the topbar */
 .topbar {
-  background-color: #415972; /* Dark Blue background */
-  padding: 20px 30px;
+  height: 70px;
+  background: #8bbcd9;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  font-family: 'Arial', sans-serif;
+  align-items: center;
+  padding: 0 20px;
 }
 
-/* Container inside the topbar */
-.topbar-content {
+/* TITLE */
+.topbar h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+/* RIGHT SIDE */
+.topbar-right {
   display: flex;
   align-items: center;
-  width: 100%;
-  justify-content: space-between;
+  gap: 12px;
+  position: relative;
 }
 
-/* Title styling */
-.title {
-  color: #000000; /* Light color for contrast */
-  margin: 0;
-  font-size: 1.8em;
-  display: flex;
-  align-items: center;
+/* TIME */
+.time {
+  background: #ffffff;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 13px;
 }
 
+/* PROFILE IMAGE */
+.profile img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+}
 
-/* Icon inside the button */
-.icon {
-  margin-right: 8px;
-  font-size: 1.2em;
+/* DROPDOWN */
+.dropdown {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  width: 130px;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* DROPDOWN ITEMS */
+.dropdown p {
+  margin: 5px 0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.dropdown p:hover {
+  color: #007bff;
 }

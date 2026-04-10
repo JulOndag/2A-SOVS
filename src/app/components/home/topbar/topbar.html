@@ -1,5 +1,16 @@
-<header class="topbar">
-  <div class="topbar-content">
-    <h3 class="title">Admin Dashboard</h3>
+<div class="topbar">
+  <h1>Admin Dashboard</h1>
+
+  <div class="topbar-right">
+    <div class="time">{{ currentTime }}</div>
+
+    <div class="profile" (click)="toggleDropdown()">
+      <img src="assets/user.png" alt="User" />
+    </div>
+
+    <div class="dropdown" *ngIf="showDropdown">
+      <p>Profile</p>
+      <p (click)="logout()">Logout</p>
+    </div>
   </div>
-</header>
+</div>

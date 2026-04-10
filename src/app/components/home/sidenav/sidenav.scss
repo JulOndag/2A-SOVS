@@ -1,55 +1,65 @@
-.sidenav{
-  width:220px;
-  height:100vh;
-  background:#1f3c64;
-  color:white;
-  padding:20px;
-  position:fixed;
-  left:0;
-  top:0;
-}
-
-.logo{
-  margin-bottom:40px;
-}
-
-.nav-links{
-  list-style:none;
-  padding:0;
-}
-
-.nav-links li{
-  padding:12px;
-  border-radius:6px;
-  cursor:pointer;
-  margin-bottom:20px;
-  justify-content: center;
-  
-}
-
-.nav-links li:hover{
-  background:#2e4f7f;
-}
-
-/* Logout button styling */
-.logout-btn {
-  background-color: #1f3c64; /* Red color for logout */
-  border: none;
-  padding: 15px 69px;
-  border-radius: 5px;;
+.sidenav {
+  width: 240px;
+  height: 100vh;
+  background: linear-gradient(180deg, #0f2a44, #1e3c5c);
   color: #fff;
-  border: 1px solid #e0e0e0;
-  cursor: pointer;
-  font-size: 10px;
   display: flex;
-  align-items: center;
-  transition: background-color 0.3s ease;
-  justify-content: center;
-
-  margin-top: 400px; /* Push the logout button to the bottom */
-  margin-left: 0; 
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 15px;
 }
 
-.logout-btn:hover {
-  background-color: #5c5091;
+.logo-section {
+  text-align: center;
+
+  img {
+    width: 60px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    color: #f9c74f;
+    margin: 0;
+  }
+
+  span {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 30px;
+
+  li {
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .active {
+    background: #2a6fdb;
+  }
+}
+
+.logout-btn {
+  border: 1px solid #fff;
+  background: transparent;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background: #fff;
+    color: #1e3c5c;
+  }
 }
