@@ -48,11 +48,13 @@
 .clock {
   font-size: 15px;
   color: #64748b;
+  text-underline-offset: 2px;
 }
 
 .profile img {
   width: 32px;
   height: 32px;
+  padding: 5px;
   border-radius: 10%;
   cursor: pointer;
   border: 1.5px solid #595959;
