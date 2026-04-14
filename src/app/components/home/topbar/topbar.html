@@ -1,8 +1,15 @@
 <div class="topbar">
-  <h1>Admin Dashboard</h1>
+  <div class="topbar-left">
+    <h1>Admin Dashboard</h1>
+  </div>
 
   <div class="topbar-right">
-    <div class="time">{{ currentTime }}</div>
+    <div class="status-pill">
+      <div class="status-dot"></div>
+      Election Active
+    </div>
+
+    <span class="clock">{{ currentTime }}</span>
 
     <div class="profile" (click)="toggleDropdown()">
       <img src="assets/user.png" alt="User" />

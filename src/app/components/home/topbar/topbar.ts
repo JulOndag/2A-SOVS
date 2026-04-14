@@ -18,9 +18,10 @@ export class TopbarComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    this.role = user?.role || '';
-
+    if (typeof localStorage !== 'undefined') {
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      this.role = user?.role || '';
+    }
     this.updateTime();
     setInterval(() => this.updateTime(), 1000);
   }
@@ -42,8 +43,10 @@ export class TopbarComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('user');
-    localStorage.removeItem('isLoggedIn');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('user');
+      localStorage.removeItem('isLoggedIn');
+    }
     this.router.navigate(['/login']);
   }
 }

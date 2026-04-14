@@ -13,7 +13,7 @@ import { Sidenav } from './sidenav/sidenav';
 })
 export class HomeComponent {
   isOpen = false;
-  role = localStorage.getItem('role') || 'admin';
+  role = typeof localStorage !== 'undefined' ? localStorage.getItem('role') || 'admin' : 'admin';
   currentTime = '';
 
   constructor(private router: Router) {
@@ -25,7 +25,7 @@ export class HomeComponent {
   }
 
   logout() {
-    localStorage.clear();
+    if (typeof localStorage !== 'undefined') localStorage.clear();
     this.router.navigate(['/login']);
   }
 

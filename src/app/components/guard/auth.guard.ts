@@ -1,22 +1,24 @@
-//route of the user (navigate to menu if naka login na)
-
-import { Injectable } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CanActivate, Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router) {}
+  private router = inject(Router);
+  private platformId = inject(PLATFORM_ID);
 
   canActivate(): boolean {
-    const user = localStorage.getItem('user');
+    if (isPlatformBrowser(this.platformId)) {
+      const isLoggedIn = localStorage.getItem('isLoggedIn'); 
 
-    if (!user) {
-      this.router.navigate(['/login']);
-      return false;
+      if (isLoggedIn === 'true') {
+        return true;
+      }
     }
 
-    return true;
+    this.router.navigate(['/login']);
+    return false;
   }
 }

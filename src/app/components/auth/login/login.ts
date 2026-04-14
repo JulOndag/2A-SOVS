@@ -51,7 +51,15 @@ export class LoginComponent {
             showConfirmButton: false,
           });
 
-          setTimeout(() => this.router.navigate(['/home']), 1500);
+          
+          setTimeout(() => {
+            if (user.role === 'admin') {
+              this.router.navigate(['/admin']);
+            } else {
+              this.router.navigate(['/home']);
+            }
+          }, 1500);
+
         } else {
           this.error = 'Invalid email or password';
         }
