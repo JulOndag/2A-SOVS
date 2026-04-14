@@ -52,14 +52,13 @@
 }
 
 .profile img {
-  width: 32px;
-  height: 32px;
+  width: 45px;
+  height: 45px;
   padding: 5px;
   border-radius: 10%;
   cursor: pointer;
-  border: 1.5px solid #595959;
+  border: 1.5px solid #292929;
   transition: opacity 0.2s;
-  padding: 5px;
 
   &:hover { opacity: 0.8; }
 }
@@ -72,15 +71,14 @@
   background: #6c707a;
   border: 0.5px solid #e2e8f0;
   border-radius: 6px;
-  padding: 6px;
-  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(117, 112, 112, 0.555);
   z-index: 200;
 
   p {
     margin: 0;
     padding: 8px 12px;
     font-size: 13px;
-    color: #000000;
+    color: #2d2d2d;
     border-radius: 50px;
     cursor: pointer;
     transition: background 0.15s;

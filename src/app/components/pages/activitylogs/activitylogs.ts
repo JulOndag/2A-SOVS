@@ -29,7 +29,7 @@ export class Activitylogs {
     {
       type: 'admin',
       message: 'Admin logged in',
-      time: '8:45 AM'
+      time: '8:40 AM'
     }
   ];
 }
