@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 2ASOVSWebApp
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.2.
@@ -58,3 +59,6 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
 # 2A-SOVS
+=======
+# trial
+>>>>>>> ab399720399f2929d9d942cd2e95cdaa5d045c00
