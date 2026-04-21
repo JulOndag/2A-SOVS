@@ -22,11 +22,6 @@ interface Voter {
 })
 export class Voters {
   voters: Voter[] = [
-    { id: '2021-00001', name: 'John Doe',    email: 'john@ustp.edu.ph',    course: 'BSIT', year: '3rd', status: 'voted',     votedAt: 'Sept 1, 10:20 AM' },
-    { id: '2021-00002', name: 'Jane Smith',  email: 'jane@ustp.edu.ph',    course: 'BSCS', year: '2nd', status: 'not-voted', votedAt: '' },
-    { id: '2021-00003', name: 'Maria Cruz',  email: 'maria@ustp.edu.ph',   course: 'BSCE', year: '4th', status: 'voted',     votedAt: 'Sept 1, 11:05 AM' },
-    { id: '2021-00004', name: 'Carlo Reyes', email: 'carlo@ustp.edu.ph',   course: 'BSIT', year: '1st', status: 'not-voted', votedAt: '' },
-    { id: '2021-00005', name: 'Ana Lim',     email: 'ana@ustp.edu.ph',     course: 'BSME', year: '3rd', status: 'voted',     votedAt: 'Sept 2, 9:14 AM' },
   ];
 
   filteredVoters: Voter[] = [...this.voters];
@@ -133,28 +128,6 @@ export class Voters {
   closeViewModal(): void {
     this.showViewModal = false;
     this.viewingVoter = null;
-  }
-
-  // ─── Mark as voted ────────────────────────────────────
-  markAsVoted(voter: Voter): void {
-    Swal.fire({
-      title: 'Mark as voted?',
-      text: `Confirm that ${voter.name} has voted.`,
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonColor: '#48a868',
-      confirmButtonText: 'Yes, confirm',
-    }).then(result => {
-      if (result.isConfirmed) {
-        const index = this.voters.findIndex(v => v.id === voter.id);
-        if (index > -1) {
-          this.voters[index].status = 'voted';
-          this.voters[index].votedAt = new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-        }
-        this.filterVoters();
-        Swal.fire({ icon: 'success', title: 'Marked as voted!', timer: 1200, showConfirmButton: false });
-      }
-    });
   }
 
   // ─── Export CSV ───────────────────────────────────────

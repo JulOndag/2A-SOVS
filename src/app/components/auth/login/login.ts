@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.scss'],
 })
 export class LoginComponent {
-  email = '';
+  identifier = '';
   password = '';
   error: string | null = null;
   loading = false;
@@ -26,14 +26,14 @@ export class LoginComponent {
   login() {
     this.error = null;
 
-    if (!this.email || !this.password) {
-      this.error = 'Please enter email and password';
+    if (!this.identifier || !this.password) {
+      this.error = 'Please enter identifier and password';
       return;
     }
 
     this.loading = true;
 
-    this.auth.login(this.email, this.password).subscribe({
+    this.auth.login(this.identifier, this.password).subscribe({
       next: (users) => {
         this.loading = false;
 
@@ -43,18 +43,27 @@ export class LoginComponent {
           localStorage.setItem('user', JSON.stringify(user));
           localStorage.setItem('isLoggedIn', 'true');
 
+          const roleLabel =
+            user.role === 'admin' ? 'Administrator' :
+            user.role === 'elecom' ? 'Electoral Commission' :
+            user.role === 'student' ? 'Student' :
+            'Unknown';
+
           Swal.fire({
             icon: 'success',
             title: 'Login Successful!',
-            text: `Welcome ${user.role}`,
+            text: `Welcome, ${roleLabel}!`,
             timer: 1500,
             showConfirmButton: false,
           });
 
-          
           setTimeout(() => {
             if (user.role === 'admin') {
               this.router.navigate(['/admin']);
+            } else if (user.role === 'elecom') {
+              this.router.navigate(['/elecom']);
+            } else if (user.role === 'student') {
+              this.router.navigate(['/student']);
             } else {
               this.router.navigate(['/home']);
             }
