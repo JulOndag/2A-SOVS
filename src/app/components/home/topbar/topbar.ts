@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-topbar',
@@ -22,6 +23,7 @@ export class TopbarComponent implements OnInit {
       const user = JSON.parse(localStorage.getItem('user') || '{}');
       this.role = user?.role || '';
     }
+
     this.updateTime();
     setInterval(() => this.updateTime(), 1000);
   }
@@ -43,10 +45,37 @@ export class TopbarComponent implements OnInit {
   }
 
   logout(): void {
-    if (typeof localStorage !== 'undefined') {
-      localStorage.removeItem('user');
-      localStorage.removeItem('isLoggedIn');
-    }
-    this.router.navigate(['/login']);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will be logged out of your session!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, logout!',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        // Clear storage
+        if (typeof localStorage !== 'undefined') {
+          localStorage.removeItem('user');
+          localStorage.removeItem('isLoggedIn');
+        }
+
+        // Show success message
+        Swal.fire({
+          title: 'Logged out!',
+          text: 'You have been successfully logged out.',
+          icon: 'success',
+          timer: 1500,
+          showConfirmButton: false
+        }).then(() => {
+          // Use Angular routing (correct way)
+          this.router.navigate(['/login']);
+        });
+
+      }
+    });
   }
 }

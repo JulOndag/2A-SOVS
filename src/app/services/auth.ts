@@ -6,6 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class Auth {
+  currentUser$(currentUser$: any) {
+    throw new Error('Method not implemented.');
+  }
+  getCurrentUser() {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = 'http://localhost:3000/users';
 
   constructor(private http: HttpClient) {}

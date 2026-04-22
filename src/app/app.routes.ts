@@ -11,10 +11,11 @@ import { Election } from './components/pages/election/election';
 import { Candidates } from './components/pages/candidates/candidates';
 import { Results } from './components/pages/results/results';
 
-// ADMIN PAGES
-import { Admindashboard } from './components/pages/admindashboard/admindashboard';
+// elecom PAGES
 import { Voters } from './components/pages/voters/voters';
-import { Activitylogs } from './components/pages/activitylogs/activitylogs';
+import { ElecomNotif } from './layouts/elecom-portal/elecom-notif/elecom-notif';
+import { ElecomSettings } from './layouts/elecom-portal/elecom-settings/elecom-settings';
+import { Elecom } from './pages/elecom/elecom';
 
 export const routes: Routes = [
   // default redirect
@@ -31,7 +32,7 @@ export const routes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'election', pathMatch: 'full' },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 
       { path: 'election', component: Election },
       { path: 'candidates', component: Candidates },
@@ -40,23 +41,18 @@ export const routes: Routes = [
   },
 
   // =========================
-  // ADMIN ROUTES (ADMIN LAYOUT)
+  // elecom ROUTES (elecomLAYOUT)
   // =========================
-  {
-    path: 'admin',
-    component: HomeComponent,
-    canActivate: [AuthGuard, RoleGuard],
-    data: { role: 'admin' },
-    children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-
-      { path: 'dashboard', component: Admindashboard },
-      { path: 'voters', component: Voters },
-      { path: 'activitylogs', component: Activitylogs },
-      { path: 'candidates', component: Candidates },
-      { path: 'results', component: Results },
-    ],
-  },
+  // =========================
+  // Elecom Routes
+  // =========================
+  { path: 'elecom-dashboard', component: Elecom, canActivate: [AuthGuard], data: { role: 'elecom' } },
+  { path: 'elecom-voters', component: Voters, canActivate: [AuthGuard], data: { role: 'elecom' } },
+  { path: 'elecom-candidates', component: Candidates, canActivate: [AuthGuard], data: { role: 'elecom' } },
+  { path: 'elecom-elections', component: Election, canActivate: [AuthGuard], data: { role: 'elecom' } },
+  { path: 'elecom-results', component: Results, canActivate: [AuthGuard], data: { role: 'elecom' } },
+  { path: 'elecom-notifications', component: ElecomNotif, canActivate: [AuthGuard], data: { role: 'elecom' } },
+  { path: 'elecom-settings', component: ElecomSettings, canActivate: [AuthGuard], data: { role: 'elecom' } },
 
   // fallback
   { path: '**', redirectTo: 'home' },

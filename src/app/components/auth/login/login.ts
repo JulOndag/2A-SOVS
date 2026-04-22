@@ -20,8 +20,7 @@ export class LoginComponent {
 
   constructor(
     private auth: Auth,
-    private router: Router,
-  ) {}
+    private router: Router, private Auth: Auth) {}
 
   login() {
     this.error = null;
