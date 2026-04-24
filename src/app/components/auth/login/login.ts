@@ -18,9 +18,7 @@ export class LoginComponent {
   error: string | null = null;
   loading = false;
 
-  constructor(
-    private auth: Auth,
-    private router: Router, private Auth: Auth) {}
+  constructor(private auth: Auth, private router: Router) {}
 
   login() {
     this.error = null;
@@ -58,13 +56,13 @@ export class LoginComponent {
 
           setTimeout(() => {
             if (user.role === 'admin') {
-              this.router.navigate(['/admin']);
+              this.router.navigate(['/admin-dashboard']);
             } else if (user.role === 'elecom') {
-              this.router.navigate(['/elecom']);
+              this.router.navigate(['/elecom-dashboard']);
             } else if (user.role === 'student') {
-              this.router.navigate(['/student']);
+              this.router.navigate(['/student-dashboard']);
             } else {
-              this.router.navigate(['/home']);
+              this.router.navigate(['/login']);
             }
           }, 1500);
 

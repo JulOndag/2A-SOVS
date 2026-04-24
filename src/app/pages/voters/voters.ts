@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-voters',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './voters.html',
   styleUrl: './voters.scss',
 })
-export class Voters {
-
-}
+export class Voters {}

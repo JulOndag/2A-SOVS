@@ -11,23 +11,21 @@ import { CommonModule } from '@angular/common';
 export class ElecomDashboard implements OnInit, OnDestroy {
 
   stats = {
-    totalVoters: '',
-    voted: '',
-    notVoted: '',
-    totalCandidates: '',
+    totalVoters: 0,
+    voted: 0,
+    notVoted: 0,
+    totalCandidates: 0,
   };
 
-  recentActivities = [
-    { type: '',     title: '',          subtitle: '',         time: '' },
-  ];
+  recentActivities: { type: string; title: string; subtitle: string; time: string }[] = [];
 
   ngOnInit(): void {}
   ngOnDestroy(): void {}
 
   get participationRate(): number {
-    const totalVoters = Number(this.stats.totalVoters);
-    const voted = Number(this.stats.voted);
-    return totalVoters > 0 ? Math.round((voted / totalVoters) * 100) : 0;
+    return this.stats.totalVoters > 0
+      ? Math.round((this.stats.voted / this.stats.totalVoters) * 100)
+      : 0;
   }
 
   startElection(): void {
