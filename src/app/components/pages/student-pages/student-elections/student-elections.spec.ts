@@ -1,20 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Elecom } from '../../../components/pages/elecom-pages/elecom/elecom';
 
+import { StudentElections } from './student-elections';
 
-
-
-describe('ElecomDashboard', () => {
-  let component: Elecom;
-  let fixture: ComponentFixture<Elecom>;
+describe('StudentElections', () => {
+  let component: StudentElections;
+  let fixture: ComponentFixture<StudentElections>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Elecom]
+      imports: [StudentElections]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Elecom);
+    fixture = TestBed.createComponent(StudentElections);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

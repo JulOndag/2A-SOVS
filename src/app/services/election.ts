@@ -45,6 +45,24 @@ export interface Election {
   status: 'upcoming' | 'active' | 'completed';
 }
 
+export interface Application {
+  id: string;
+  studentId: string;
+  studentName: string;
+  name: string;
+  course: string;
+  year: string;
+  position: string;
+  party: string;
+  bio: string;
+  awards: string;
+  photo: string;
+  supportingDoc: string;
+  status: 'pending' | 'approved' | 'rejected';
+  submittedAt: string;
+  electionId: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ElectionService {
   private base = 'http://localhost:3000';
@@ -69,6 +87,9 @@ export class ElectionService {
   getVoters(): Observable<Voter[]> {
     return this.http.get<Voter[]>(`${this.base}/voters`);
   }
+  getVoterByStudentId(studentId: string): Observable<Voter[]> {
+    return this.http.get<Voter[]>(`${this.base}/voters?studentId=${studentId}`);
+  }
   addVoter(v: Omit<Voter, 'id'>): Observable<Voter> {
     return this.http.post<Voter>(`${this.base}/voters`, v);
   }
@@ -83,6 +104,9 @@ export class ElectionService {
   getElections(): Observable<Election[]> {
     return this.http.get<Election[]>(`${this.base}/elections`);
   }
+  getActiveElection(): Observable<Election[]> {
+    return this.http.get<Election[]>(`${this.base}/elections?status=active`);
+  }
   addElection(e: Omit<Election, 'id'>): Observable<Election> {
     return this.http.post<Election>(`${this.base}/elections`, e);
   }
@@ -91,5 +115,19 @@ export class ElectionService {
   }
   deleteElection(id: number): Observable<void> {
     return this.http.delete<void>(`${this.base}/elections/${id}`);
+  }
+
+  // ── Applications ─────────────────────────────────────────────
+  getApplications(): Observable<Application[]> {
+    return this.http.get<Application[]>(`${this.base}/applications`);
+  }
+  getApplicationByStudentId(studentId: string): Observable<Application[]> {
+    return this.http.get<Application[]>(`${this.base}/applications?studentId=${studentId}`);
+  }
+  submitApplication(a: Omit<Application, 'id'>): Observable<Application> {
+    return this.http.post<Application>(`${this.base}/applications`, a);
+  }
+  updateApplication(a: Application): Observable<Application> {
+    return this.http.put<Application>(`${this.base}/applications/${a.id}`, a);
   }
 }

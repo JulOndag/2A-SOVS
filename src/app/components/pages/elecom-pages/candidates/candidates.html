@@ -135,10 +135,12 @@
             <select [(ngModel)]="newCandidate.position">
               <option *ngFor="let p of positions">{{ p }}</option>
             </select>
-          </div>
           <div class="form-group">
             <label>Course <span class="req">*</span></label>
-            <input [(ngModel)]="newCandidate.course" placeholder="e.g. BSIT" />
+            <select [(ngModel)]="newCandidate.course">
+              <option value="" disabled selected>Select Course</option>
+              <option *ngFor="let c of courses" [value]="c">{{ c }}</option>
+            </select>
           </div>
         </div>
         <div class="form-group">

@@ -9,6 +9,10 @@ const USG_POSITIONS = [
   'Treasurer', 'Auditor', 'PRO / PIO', 'Senator'
 ];
 
+const COURSES = [
+  'BSIT','BSTCM', 'BSEMT'
+];
+
 @Component({
   selector: 'app-candidates',
   standalone: true,
@@ -27,7 +31,7 @@ export class Candidates implements OnInit {
   years = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
 
   newCandidate = {
-    name: '', position: USG_POSITIONS[0], course: '', year: '1st Year',
+    name: '', position: USG_POSITIONS[0], course: COURSES[0], year: '1st Year',
     party: '', bio: '', photo: '', votes: 0,
     status: 'pending' as 'pending',
     requirements: {
@@ -35,6 +39,7 @@ export class Candidates implements OnInit {
       coc: false, noViolations: false, noFailingGrades: false
     }
   };
+  courses = COURSES;
 
   constructor(private svc: ElectionService) {}
 

@@ -41,12 +41,20 @@ export class MainLayout implements OnInit {
     this.isLoginRoute = url === '/login' || url === '/';
   }
 
+  get isElecom(): boolean {
+    return this.currentUser?.role === 'elecom';
+  }
+
+  get isStudent(): boolean {
+    return this.currentUser?.role === 'student';
+  }
+
   getUserName(): string {
-    return this.currentUser?.name || 'Elecom User';
+    return this.currentUser?.name || 'User';
   }
 
   getUserInitial(): string {
-    return this.currentUser?.name?.charAt(0)?.toUpperCase() || 'E';
+    return this.currentUser?.name?.charAt(0)?.toUpperCase() || 'U';
   }
 
   toggleSidebar(): void {
@@ -73,8 +81,8 @@ export class MainLayout implements OnInit {
       text: 'You will be logged out of your session!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#22c84c',
-      cancelButtonColor: '#d33',
+      confirmButtonColor: '#7B1C2E',
+      cancelButtonColor: '#c0392b',
       confirmButtonText: 'Yes, logout!',
       cancelButtonText: 'Cancel'
     }).then((result) => {
