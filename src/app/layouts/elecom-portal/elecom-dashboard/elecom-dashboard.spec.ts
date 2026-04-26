@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Elecom } from '../../../pages/elecom/elecom';
+import { Elecom } from '../../../components/pages/elecom-pages/candidates/elecom/elecom';
 
 
 

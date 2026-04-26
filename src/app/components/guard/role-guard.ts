@@ -7,21 +7,32 @@ import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 export class RoleGuard implements CanActivate {
   constructor(private router: Router) {}
 
-canActivate(route: ActivatedRouteSnapshot): boolean {
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
-  const requiredRole = route.data['role'];
+  canActivate(route: ActivatedRouteSnapshot): boolean {
+    const userStr = localStorage.getItem('user');
+    
+    // No user in storage at all
+    if (!userStr) {
+      this.router.navigate(['/login']);
+      return false;
+    }
 
-  if (user.role === requiredRole) {
-    return true;
+    const user = JSON.parse(userStr);
+    const requiredRole = route.data['role'];
+
+    if (user.role === requiredRole) {
+      return true;
+    }
+
+    if (user.role === 'admin') {
+      this.router.navigate(['/admin-dashboard']);
+    } else if (user.role === 'elecom') {
+      this.router.navigate(['/elecom-dashboard']);
+    } else if (user.role === 'student') {
+      this.router.navigate(['/student-dashboard']);
+    } else {
+      this.router.navigate(['/login']);
+    }
+
+    return false;
   }
-
-  // redirect to correct home based on their actual role
-  if (user.role === 'elecom') {
-    this.router.navigate(['/elecom-dashboard']);
-  } else {
-    this.router.navigate(['/home']);
-  }
-
-  return false;
-}
 }
