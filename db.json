@@ -10,7 +10,7 @@
     },
     {
       "id": "2",
-      "email": "2024300753",
+      "email": "student@gmail.com",
       "password": "student123",
       "role": "student",
       "name": "Student User",
@@ -26,16 +26,53 @@
     }
   ],
   "voters": [],
-  "candidates": [
+  "candidates": [],
+  "elections": [
     {
-      "id": "C002",
-      "name": "JULIET UY",
-      "position": "Vice President",
-      "party": "PULSE",
-      "photo": "data:application/octet-stream;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAA0KChUPFRYVFRYkGRoZJCUlHh4lJSkiJSQlIikpKyotLSorKSsoLjEuKCstLjU1Li0xPDo8MTs3NztBOkE6Oi8BDQkJEg4SERISER0SFhIdGxoUFBobIBcYFxgXICIeHB0dHB4iHxwaFxocHyAdIyMdICIaHhoiISIiITI2MjEx///CABEICAAFVQMBIQACEQEDEQH/xAD9AAADAQEBAAAAAAAAAAAAAAAAAQIDBAUBAQEBAQEAAAAAAAAAAAAAAAABAgQDEAACAgEDBAIDAAMAAwEBAQAAAQIREAMSIQQTIDEUMCIyQQVAURVCUGEjUhEAAgECBAIIBAMGBQQCAQUAAAECEBEDEiExIEEEBhMiMFFzsjI0YXFAQoFScpGhscEUIzPR8CRQYsIFgkNjotLh4hIAAgECBQIFAgUDBAICAwAAAAECEBEDEiAhMTBBBjRRc7ITQAQyYXGBIkJQkbHB0VKhFOFgYvATAAECBQQCAwEAAgIDAAAAABEAARAgMEBQQVFgYTFwAhIh0XGRQpCAgfD/2gAMAwEAAhEDEgAAAsqZ1zl0Cbk15zLankG1YWPTJ41ajfArM16BXbXBZp2Svno5kehvapmcWcqOpGm0plWWqcmhIa8RplF5kamQNDqEQ9KrMgFVa5GbEQigBgQ3FhM1WkXvpniCyqxYgEFFqwhSXrbzpLFlIUaMzQmNFKGgC2POEaTRSFRdDMoemHTx8mF9vZ0cg9ocSdF28c2XEoUtzXBLzhUEGyyjTSOgrCum5dOanFkdktgYnIrMbjcNN1zmxarhimoYgmGcQonapzNFCoCAIZsaZ5AAyQaBjIKBQnTuDWt86rnhEDFAlRtLDszQ9FyRYiRNjZCBjY3AgBBoRNUSZ1pqZaCTJBWfVx8s129mPQOYvKTpm3luwgXQuSs6cIOmXHCwcNDk6epYws6kuuBylnULtUH",
-      "votes": 0,
-      "bio": "ZcSDgv",
-      "status": "disqualified"
+      "id": "cd0a",
+      "name": "czdcsc",
+      "description": "dvsdvxcv",
+      "startDate": "1234-12-31",
+      "endDate": "3343-12-31",
+      "totalPositions": 7,
+      "totalVoters": 0,
+      "voted": 0,
+      "status": "active"
+    },
+    {
+      "id": "9bcd",
+      "name": "czdcsc",
+      "description": "dvsdvxcv",
+      "startDate": "1234-12-31",
+      "endDate": "3343-12-31",
+      "totalPositions": 7,
+      "totalVoters": 0,
+      "voted": 0,
+      "status": "active"
+    },
+    {
+      "id": "eca7",
+      "name": "wget uj",
+      "description": "ieogsudo",
+      "startDate": "7545-04-05",
+      "endDate": "4242-05-05",
+      "totalPositions": 7,
+      "totalVoters": 0,
+      "voted": 0,
+      "status": "active"
+    },
+    {
+      "id": "8653",
+      "name": "wget uj",
+      "description": "ieogsudo",
+      "startDate": "7545-04-05",
+      "endDate": "4242-05-05",
+      "totalPositions": 7,
+      "totalVoters": 0,
+      "voted": 0,
+      "status": "active"
     }
-  ]
+  ],
+  "applications": [],
+  "voteRecords": []
 }

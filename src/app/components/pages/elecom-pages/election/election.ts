@@ -48,7 +48,7 @@ export class Elections implements OnInit {
   }
 
   getStatusLabel(status: string): string {
-    return { upcoming: 'Upcoming', active: 'Active', completed: 'Completed' }[status] ?? status;
+    return ({ upcoming: 'Upcoming', active: 'Active', completed: 'Completed' } as Record<string, string>)[status] ?? status;
   }
 
   openAddModal(): void {
@@ -81,14 +81,23 @@ export class Elections implements OnInit {
       });
     } else {
       const newElection: Omit<Election, 'id'> = {
-        name:           this.currentElection.name!,
-        description:    this.currentElection.description || '',
-        startDate:      this.currentElection.startDate!,
-        endDate:        this.currentElection.endDate!,
+        name: this.currentElection.name!,
+        description: this.currentElection.description || '',
+        startDate: this.currentElection.startDate!,
+        endDate: this.currentElection.endDate!,
         totalPositions: this.currentElection.totalPositions || 7,
-        totalVoters:    0,
-        voted:          0,
-        status:         this.currentElection.status || 'upcoming'
+        totalVoters: 0,
+        voted: 0,
+        status: this.currentElection.status || 'upcoming',
+        markAllRead: function (unread: Notification[]): unknown {
+          throw new Error('Function not implemented.');
+        },
+        markNotificationRead: function (n: Notification): unknown {
+          throw new Error('Function not implemented.');
+        },
+        getNotifications: function (role: string): unknown {
+          throw new Error('Function not implemented.');
+        }
       };
       this.svc.addElection(newElection).subscribe(() => {
         this.loadElections();
@@ -99,52 +108,35 @@ export class Elections implements OnInit {
 
   startElection(e: Election): void {
     if (this.activeElection) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'An election is already active!',
-        text: 'End the current election before starting a new one.'
-      });
+      Swal.fire({ icon: 'warning', title: 'An election is already active!', text: 'End the current election first.' });
       return;
     }
-    const updated: Election = { ...e, status: 'active' };
-    this.svc.updateElection(updated).subscribe(() => this.loadElections());
+    this.svc.updateElection({ ...e, status: 'active' }).subscribe(() => this.loadElections());
   }
 
   endElection(e: Election): void {
     Swal.fire({
-      title: 'End Election?',
-      text: 'This will close voting and finalize results.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#ef4444',
-      confirmButtonText: 'End Election'
+      title: 'End Election?', text: 'This will close voting and finalize results.',
+      icon: 'warning', showCancelButton: true,
+      confirmButtonColor: '#7B1C2E', confirmButtonText: 'End Election'
     }).then(r => {
-      if (r.isConfirmed) {
-        const updated: Election = { ...e, status: 'completed' };
-        this.svc.updateElection(updated).subscribe(() => this.loadElections());
-      }
+      if (r.isConfirmed)
+        this.svc.updateElection({ ...e, status: 'completed' }).subscribe(() => this.loadElections());
     });
   }
 
   deleteElection(e: Election): void {
     Swal.fire({
-      title: 'Delete election?',
-      text: `This will permanently delete "${e.name}".`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#ef4444',
-      confirmButtonText: 'Delete'
+      title: 'Delete election?', text: `Permanently delete "${e.name}"?`,
+      icon: 'warning', showCancelButton: true,
+      confirmButtonColor: '#7B1C2E', confirmButtonText: 'Delete'
     }).then(r => {
-      if (r.isConfirmed) {
+      if (r.isConfirmed)
         this.svc.deleteElection(e.id).subscribe(() => this.loadElections());
-      }
     });
   }
 
   private emptyElection(): Partial<Election> {
-    return {
-      name: '', description: '', startDate: '',
-      endDate: '', totalPositions: 7, status: 'upcoming'
-    };
+    return { name: '', description: '', startDate: '', endDate: '', totalPositions: 7, status: 'upcoming' };
   }
 }

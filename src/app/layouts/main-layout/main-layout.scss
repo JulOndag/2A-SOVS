@@ -1,132 +1,181 @@
+// ── Design Tokens ─────────────────────────────────────────────
+$blue-900: #0d1f4e;
+$blue-800: #1a3370;
+$blue-700: #1e3fa0;
+$blue-600: #2952cc;
+$blue-500: #3b6ef0;
+$blue-400: #6b90f5;
+$blue-100: #e8eeff;
+$blue-50:  #f0f4ff;
+
+$surface:  #ffffff;
+$bg:       #f5f7fc;
+$border:   #e4e9f5;
+$text:     #0d1f4e;
+$muted:    #7a89b0;
+$danger:   #e5534b;
+
+$sidebar-w: 220px;
+$topbar-h:  56px;
+$radius:    8px;
+
+// ── Reset helpers ──────────────────────────────────────────────
+* { box-sizing: border-box; }
+
+// ── Login ──────────────────────────────────────────────────────
 .login-wrapper {
   height: 100vh;
   width: 100%;
 }
 
+// ── App Shell ─────────────────────────────────────────────────
 .app-layout {
   display: flex;
   height: 100vh;
   width: 100%;
   overflow: hidden;
-  background: #f4f6f9;
+  background: $bg;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
 // ── Sidebar ───────────────────────────────────────────────────
 .sidebar {
-  width: 240px;
-  min-width: 240px;
+  width: $sidebar-w;
+  min-width: $sidebar-w;
   height: 100vh;
-  background: #181824;
+  background: $blue-900;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  transition: transform 0.3s ease;
+  overflow-x: hidden;
+  transition: transform 0.25s ease;
   z-index: 100;
+  flex-shrink: 0;
 }
 
+// ── Logo ──────────────────────────────────────────────────────
 .logo-section {
-  padding: 24px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 20px 16px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 
   img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
     object-fit: cover;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     display: block;
+    background: rgba(255,255,255,0.1);
   }
 
   h2 {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 13px;
+    font-weight: 600;
     color: #fff;
-    margin: 0 0 4px 0;
+    margin: 0 0 3px;
+    letter-spacing: 0.01em;
   }
 
   .logo-subtitle {
     font-size: 11px;
-    color: rgba(255,255,255,0.45);
+    color: rgba(255, 255, 255, 0.38);
     margin: 0;
+    letter-spacing: 0.01em;
   }
 }
 
+// ── Nav Menu ──────────────────────────────────────────────────
 .menu {
   list-style: none;
-  padding: 12px 0;
+  padding: 10px 10px;
   margin: 0;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 
   li {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px 20px;
+    gap: 9px;
+    padding: 9px 10px;
     font-size: 13px;
-    color: rgba(255,255,255,0.65);
+    font-weight: 450;
+    color: rgba(255, 255, 255, 0.52);
     cursor: pointer;
-    transition: all 0.2s ease;
-    border-left: 3px solid transparent;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+    letter-spacing: 0.01em;
 
     svg {
-      width: 16px;
-      height: 16px;
+      width: 15px;
+      height: 15px;
       flex-shrink: 0;
+      opacity: 0.75;
+      transition: opacity 0.15s;
     }
 
     &:hover {
-      background: rgba(255,255,255,0.07);
-      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.85);
+
+      svg { opacity: 1; }
     }
 
     &.active {
-      background: rgba(34,200,76,0.12);
-      color: #22c84c;
-      border-left-color: #22c84c;
-      font-weight: 600;
+      background: $blue-600;
+      color: #fff;
+      font-weight: 500;
+
+      svg { opacity: 1; }
     }
   }
 }
 
+// ── Sidebar Footer ────────────────────────────────────────────
 .sidebar-footer {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 16px 20px;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 14px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
 
   .avatar {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: #22c84c;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    background: $blue-600;
     color: #fff;
-    font-weight: 700;
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    letter-spacing: 0.02em;
   }
 
   .user-name {
-    font-size: 13px;
-    font-weight: 600;
-    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .user-role {
     font-size: 11px;
-    color: rgba(255,255,255,0.45);
+    color: rgba(255, 255, 255, 0.35);
   }
 }
 
-// ── Overlay ───────────────────────────────────────────────────
+// ── Overlay (mobile) ──────────────────────────────────────────
 .overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.3);
   z-index: 99;
 }
 
@@ -136,47 +185,51 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  min-width: 0;
 }
 
 // ── Topbar ────────────────────────────────────────────────────
 .content-header {
   display: flex;
   align-items: center;
-  padding: 0 24px;
-  height: 64px;
-  background: #dadada;
-  border-bottom: 1px solid #e8eaed;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  gap: 16px;
+  padding: 0 20px;
+  height: $topbar-h;
+  background: $surface;
+  border-bottom: 1px solid $border;
+  gap: 14px;
   flex-shrink: 0;
 }
 
 .hamburger {
   background: none;
   border: none;
-  font-size: 20px;
+  font-size: 18px;
   cursor: pointer;
-  color: #444;
+  color: $muted;
   display: none;
-  padding: 4px 8px;
+  padding: 5px 7px;
   border-radius: 6px;
+  line-height: 1;
+  transition: background 0.15s;
 
-  &:hover { background: #f4f6f9; }
+  &:hover { background: $bg; color: $text; }
 }
 
 .header-left {
   flex: 1;
+  min-width: 0;
 
   h1.content-title {
-    font-size: 17px;
-    font-weight: 700;
-    color: #1a1a2e;
+    font-size: 14px;
+    font-weight: 600;
+    color: $text;
     margin: 0;
+    letter-spacing: 0.01em;
   }
 
   p.content-subtitle {
-    font-size: 12px;
-    color: #888;
+    font-size: 11.5px;
+    color: $muted;
     margin: 0;
   }
 }
@@ -184,100 +237,126 @@
 .topbar-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
+// ── Notification icon ─────────────────────────────────────────
 .notification-icon {
   position: relative;
   cursor: pointer;
-  color: #555;
+  color: $muted;
   display: flex;
   align-items: center;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
 
-  &:hover { color: #1a1a2e; }
+  &:hover {
+    background: $blue-50;
+    color: $blue-600;
+  }
 
   .badge {
     position: absolute;
-    top: -4px;
-    right: -6px;
-    background: #e53e3e;
+    top: 2px;
+    right: 2px;
+    background: $danger;
     color: #fff;
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1.5px solid $surface;
   }
 }
 
+// ── Profile Dropdown ──────────────────────────────────────────
 .profile-dropdown {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   cursor: pointer;
   position: relative;
-  padding: 6px 10px;
-  border-radius: 8px;
-  transition: background 0.2s;
+  padding: 5px 9px;
+  border-radius: 7px;
+  border: 1px solid $border;
+  transition: background 0.15s, border-color 0.15s;
+  background: $surface;
 
-  &:hover { background: #f4f6f9; }
+  &:hover {
+    background: $blue-50;
+    border-color: $blue-100;
+  }
 
   .profile-avatar-text {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: #22c84c;
+    width: 26px;
+    height: 26px;
+    border-radius: 5px;
+    background: $blue-600;
     color: #fff;
-    font-weight: 700;
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 11px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    letter-spacing: 0.03em;
   }
 
   .profile-name {
     font-size: 13px;
-    font-weight: 600;
-    color: #333;
+    font-weight: 500;
+    color: $text;
   }
 
   .dropdown-icon {
-    font-size: 10px;
-    color: #888;
+    font-size: 9px;
+    color: $muted;
+    margin-left: 2px;
   }
 
   .dropdown-menu {
     display: none;
     position: absolute;
-    top: calc(100% + 8px);
+    top: calc(100% + 6px);
     right: 0;
-    background: #fff;
-    border: 1px solid #e8eaed;
-    border-radius: 10px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    background: $surface;
+    border: 1px solid $border;
+    border-radius: $radius;
+    box-shadow: 0 4px 16px rgba(13, 31, 78, 0.1);
     list-style: none;
-    padding: 6px 0;
+    padding: 4px;
     min-width: 140px;
     z-index: 200;
 
     &.show { display: block; }
 
     li {
-      padding: 10px 16px;
+      padding: 8px 12px;
       font-size: 13px;
-      color: #333;
+      color: $text;
       cursor: pointer;
+      border-radius: 5px;
       border-left: none;
       background: none;
       font-weight: normal;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.12s;
 
       &:hover {
-        background: #f4f6f9;
-        color: #1a1a2e;
+        background: $blue-50;
+        color: $blue-700;
+      }
+
+      &:last-child {
+        color: $danger;
+        &:hover { background: #fff2f2; color: $danger; }
       }
     }
   }
@@ -288,12 +367,12 @@
   flex: 1;
   overflow-y: auto;
   padding: 24px;
-  background: #f4f6f9;
+  background: $bg;
 }
 
 // ── Responsive ────────────────────────────────────────────────
 @media (max-width: 768px) {
-  .hamburger { display: block; }
+  .hamburger { display: flex; }
 
   .sidebar {
     position: fixed;
@@ -305,159 +384,7 @@
   }
 
   .overlay { display: block; }
+
+  .content-body { padding: 16px; }
 }
 
-// ═══════════════ STUDENT LAYOUT ═══════════════════════════════
-$s-green: #0f6e56;
-$s-green-mid: #1d9e75;
-$s-border: #e5e7eb;
-$s-text: #111827;
-$s-muted: #6b7280;
-$s-bg: #f9fafb;
-
-.student-layout {
-  display: flex;
-  min-height: 100vh;
-  background: $s-bg;
-  font-family: 'Segoe UI', sans-serif;
-
-  .sidebar {
-    width: 220px;
-    background: $s-green;
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-    position: fixed;
-    top: 0; left: 0;
-    height: 100vh;
-    z-index: 100;
-    transition: transform 0.25s ease;
-
-    @media (max-width: 768px) {
-      transform: translateX(-100%);
-      &.active { transform: translateX(0); }
-    }
-  }
-
-  .logo-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 1.25rem 1rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-
-    .logo-icon {
-      width: 36px; height: 36px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-
-    h2 { font-size: 14px; font-weight: 600; color: #fff; margin: 0; }
-    p  { font-size: 11px; color: rgba(255,255,255,0.55); margin: 0; }
-  }
-
-  .nav-menu {
-    flex: 1;
-    list-style: none;
-    padding: 0.75rem 0.625rem;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-
-    li {
-      display: flex; align-items: center; gap: 10px;
-      padding: 9px 12px; border-radius: 8px;
-      cursor: pointer; color: rgba(255,255,255,0.7);
-      font-size: 13.5px; transition: background 0.15s;
-
-      svg { width: 16px; height: 16px; flex-shrink: 0; }
-
-      &:hover  { background: rgba(255,255,255,0.1); color: #fff; }
-      &.active { background: rgba(255,255,255,0.18); color: #fff; }
-    }
-  }
-
-  .sidebar-footer {
-    display: flex; align-items: center; gap: 10px;
-    padding: 1rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
-
-    .avatar {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: rgba(255,255,255,0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 600; color: #fff; flex-shrink: 0;
-    }
-
-    .user-name { font-size: 12.5px; font-weight: 500; color: #fff; }
-    .user-role { font-size: 11px; color: rgba(255,255,255,0.55); }
-  }
-
-  .overlay {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.35); z-index: 99;
-  }
-
-  .main-content {
-    flex: 1; margin-left: 220px;
-    display: flex; flex-direction: column; min-height: 100vh;
-
-    @media (max-width: 768px) { margin-left: 0; }
-  }
-
-  .topbar {
-    height: 56px; background: #fff;
-    border-bottom: 1px solid $s-border;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 1.25rem;
-    position: sticky; top: 0; z-index: 50;
-  }
-
-  .hamburger {
-    background: none; border: none; cursor: pointer;
-    color: $s-muted; padding: 6px; border-radius: 6px; display: none;
-    &:hover { background: $s-bg; }
-    @media (max-width: 768px) { display: flex; }
-  }
-
-  .profile-menu {
-    display: flex; align-items: center; gap: 8px;
-    cursor: pointer; position: relative;
-    padding: 6px 10px; border-radius: 8px;
-    font-size: 13.5px; color: $s-text;
-    border: 1px solid $s-border;
-
-    &:hover { background: $s-bg; }
-
-    .profile-avatar {
-      width: 26px; height: 26px; border-radius: 50%;
-      background: $s-green-mid; color: #fff;
-      font-size: 11px; font-weight: 600;
-      display: flex; align-items: center; justify-content: center;
-    }
-
-    .dropdown {
-      display: none;
-      position: absolute; top: calc(100% + 6px); right: 0;
-      background: #fff; border: 1px solid $s-border;
-      border-radius: 8px; list-style: none; padding: 4px;
-      min-width: 120px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      z-index: 200;
-
-      &.show { display: block; }
-
-      li {
-        padding: 8px 12px; font-size: 13px; border-radius: 6px; color: #ef4444;
-        &:hover { background: #fef2f2; }
-      }
-    }
-  }
-
-  .page-content {
-    flex: 1; padding: 1.5rem;
-    @media (max-width: 640px) { padding: 1rem; }
-  }
-}

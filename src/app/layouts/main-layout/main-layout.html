@@ -8,7 +8,7 @@
   <div class="app-layout">
 
     <!-- ── ELECOM SIDEBAR ─────────────────────────────────────── -->
-    <aside class="sidebar" [class.active]="sidebarOpen" *ngIf="isElecom">
+    <aside class="sidebar" [class.active]="sidebarOpen" *ngIf="isElecom()">
       <div class="logo-section">
         <img src="/logo.png" alt="USTP Logo" />
         <h2>Elecom Panel</h2>
@@ -45,16 +45,16 @@
         </li>
       </ul>
       <div class="sidebar-footer">
-        <div class="avatar">{{ auth.getCurrentUser()?.name?.charAt(0) || 'E' }}</div>
+        <div class="avatar">{{ getUserInitial() }}</div>
         <div class="user-info">
-          <div class="user-name">{{ auth.getCurrentUser()?.name || 'Elecom User' }}</div>
+          <div class="user-name">{{ getUserName() }}</div>
           <div class="user-role">Electoral Commission</div>
         </div>
       </div>
     </aside>
 
     <!-- ── STUDENT SIDEBAR ────────────────────────────────────── -->
-    <aside class="sidebar" [class.active]="sidebarOpen" *ngIf="isStudent">
+    <aside class="sidebar" [class.active]="sidebarOpen" *ngIf="isStudent()">
       <div class="logo-section">
         <img src="/logo.png" alt="USTP Logo" />
         <h2>Student Portal</h2>
@@ -73,19 +73,23 @@
           <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6" r="3" stroke="currentColor" stroke-width="1.3"/><path d="M3 15c0-3 2.7-5 6-5s6 2 6 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
           <span>Candidates</span>
         </li>
+        <li routerLink="/student-ballot/:id" routerLinkActive="active">
+          <svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M6 6h6M6 9h6M6 12h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          <span>Ballot</span>
+        </li>
+        <li routerLink="/student-apply" routerLinkActive="active">
+          <svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M6 7h6M6 10h4M9 13h2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><path d="M11 2v3h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Apply</span>
+        </li>
         <li routerLink="/student-results" routerLinkActive="active">
           <svg viewBox="0 0 18 18" fill="none"><rect x="2" y="10" width="4" height="6" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="7" y="6" width="4" height="10" rx="1" stroke="currentColor" stroke-width="1.3"/><rect x="12" y="2" width="4" height="14" rx="1" stroke="currentColor" stroke-width="1.3"/></svg>
           <span>Results</span>
         </li>
-        <li routerLink="/student-apply" routerLinkActive="active">
-          <svg viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M6 6h6M6 9h6M6 12h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-          <span>Apply</span>
-        </li>
       </ul>
       <div class="sidebar-footer">
-        <div class="avatar">{{ auth.getCurrentUser()?.name?.charAt(0) || 'S' }}</div>
+        <div class="avatar">{{ getUserInitial() }}</div>
         <div class="user-info">
-          <div class="user-name">{{ auth.getCurrentUser()?.name || 'Student' }}</div>
+          <div class="user-name">{{ getUserName() }}</div>
           <div class="user-role">Student</div>
         </div>
       </div>
@@ -97,20 +101,20 @@
       <header class="content-header">
         <button class="hamburger" (click)="toggleSidebar()">☰</button>
         <div class="header-left">
-          <h1 class="content-title">{{ isStudent ? 'Student Portal' : 'Elections Commissioner Panel' }}</h1>
-          <p class="content-subtitle">{{ isStudent ? 'View elections and cast your vote.' : 'Manage elections and voters.' }}</p>
+          <h1 class="content-title">{{ isStudent() ? 'Student Portal' : 'Elections Commissioner Panel' }}</h1>
+          <p class="content-subtitle">{{ isStudent() ? 'View elections and cast your vote.' : 'Manage elections and voters.' }}</p>
         </div>
         <div class="topbar-right">
-          <div class="notification-icon" (click)="goToNotifications()" *ngIf="isElecom">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <div class="notification-icon" (click)="goToNotifications()" *ngIf="isElecom()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
             <span class="badge" *ngIf="unseenCount > 0">{{ unseenCount }}</span>
           </div>
           <div class="profile-dropdown" (click)="toggleProfileMenu()">
-            <div class="profile-avatar-text">{{ auth.getCurrentUser()?.name?.charAt(0) || 'U' }}</div>
-            <span class="profile-name">{{ auth.getCurrentUser()?.name || 'User' }}</span>
-            <span class="dropdown-icon">▼</span>
+            <div class="profile-avatar-text">{{ getUserInitial() }}</div>
+            <span class="profile-name">{{ getUserName() }}</span>
+            <span class="dropdown-icon">▾</span>
             <ul class="dropdown-menu" [class.show]="isProfileMenuOpen">
-              <li (click)="goToElecomSetting($event)" *ngIf="isElecom">Settings</li>
+              <li (click)="goToElecomSetting($event)" *ngIf="isElecom()">Settings</li>
               <li (click)="logout(); $event.stopPropagation()">Logout</li>
             </ul>
           </div>

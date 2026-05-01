@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 export interface Candidate {
   id: string;
@@ -34,6 +35,9 @@ export interface Voter {
 }
 
 export interface Election {
+  markAllRead(unread: Notification[]): unknown;
+  markNotificationRead(n: Notification): unknown;
+  getNotifications(role: string): unknown;
   id: number;
   name: string;
   description: string;
@@ -61,15 +65,36 @@ export interface Application {
   status: 'pending' | 'approved' | 'rejected';
   submittedAt: string;
   electionId: number;
+  requirements?: {
+    enrollment: boolean;
+    goodMoral: boolean;
+    residency: boolean;
+    coc: boolean;
+    noViolations: boolean;
+    noFailingGrades: boolean;
+  };
+}
+
+export interface VoteRecord {
+  id: string;
+  studentId: string;
+  electionId: number;
+  votes: { [position: string]: string };
+  submittedAt: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class ElectionService {
+  getElectionById(numericId: number) {
+    throw new Error('Method not implemented.');
+  }
+  getCandidatesByElection(numericId: number) {
+    throw new Error('Method not implemented.');
+  }
   private base = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 
-  // ── Candidates ───────────────────────────────────────────────
   getCandidates(): Observable<Candidate[]> {
     return this.http.get<Candidate[]>(`${this.base}/candidates`);
   }
@@ -83,7 +108,6 @@ export class ElectionService {
     return this.http.delete<void>(`${this.base}/candidates/${id}`);
   }
 
-  // ── Voters ───────────────────────────────────────────────────
   getVoters(): Observable<Voter[]> {
     return this.http.get<Voter[]>(`${this.base}/voters`);
   }
@@ -100,8 +124,7 @@ export class ElectionService {
     return this.http.delete<void>(`${this.base}/voters/${id}`);
   }
 
-  // ── Elections ────────────────────────────────────────────────
-  getElections(): Observable<Election[]> {
+  getElections(numericId: number): Observable<Election[]> {
     return this.http.get<Election[]>(`${this.base}/elections`);
   }
   getActiveElection(): Observable<Election[]> {
@@ -117,7 +140,6 @@ export class ElectionService {
     return this.http.delete<void>(`${this.base}/elections/${id}`);
   }
 
-  // ── Applications ─────────────────────────────────────────────
   getApplications(): Observable<Application[]> {
     return this.http.get<Application[]>(`${this.base}/applications`);
   }
@@ -129,5 +151,40 @@ export class ElectionService {
   }
   updateApplication(a: Application): Observable<Application> {
     return this.http.put<Application>(`${this.base}/applications/${a.id}`, a);
+  }
+
+  getVoteRecords(): Observable<VoteRecord[]> {
+    return this.http.get<VoteRecord[]>(`${this.base}/voteRecords`);
+  }
+  getVoteRecordByStudentId(studentId: string): Observable<VoteRecord[]> {
+    return this.http.get<VoteRecord[]>(`${this.base}/voteRecords?studentId=${studentId}`);
+  }
+
+  castVote(
+    voter: Voter,
+    election: Election,
+    votes: { [position: string]: string },
+    candidates: Candidate[]
+  ): Observable<any> {
+    const record: Omit<VoteRecord, 'id'> = {
+      studentId: voter.studentId,
+      electionId: election.id,
+      votes,
+      submittedAt: new Date().toISOString()
+    };
+
+    const candidateUpdates = Object.values(votes).map(candidateId => {
+      const candidate = candidates.find(c => c.id === candidateId);
+      if (!candidate) throw new Error(`Candidate ${candidateId} not found`);
+      return this.updateCandidate({ ...candidate, votes: candidate.votes + 1 });
+    });
+
+    return this.http.post(`${this.base}/voteRecords`, record).pipe(
+      switchMap(() => forkJoin([
+        ...candidateUpdates,
+        this.updateVoter({ ...voter, hasVoted: true, verifiedAt: new Date().toISOString() }),
+        this.updateElection({ ...election, voted: election.voted + 1 })
+      ]))
+    );
   }
 }

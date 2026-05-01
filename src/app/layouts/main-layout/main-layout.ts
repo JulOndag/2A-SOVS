@@ -29,6 +29,7 @@ export class MainLayout implements OnInit {
       this.checkRoute();
       this.loadUser();
       this.isProfileMenuOpen = false;
+      this.sidebarOpen = false;
     });
   }
 
@@ -41,13 +42,9 @@ export class MainLayout implements OnInit {
     this.isLoginRoute = url === '/login' || url === '/';
   }
 
-  get isElecom(): boolean {
-    return this.currentUser?.role === 'elecom';
-  }
-
-  get isStudent(): boolean {
-    return this.currentUser?.role === 'student';
-  }
+  // Methods (not getters) so HTML can call auth.isElecom() and isElecom()
+  isElecom(): boolean  { return this.currentUser?.role === 'elecom'; }
+  isStudent(): boolean { return this.currentUser?.role === 'student'; }
 
   getUserName(): string {
     return this.currentUser?.name || 'User';
@@ -57,16 +54,15 @@ export class MainLayout implements OnInit {
     return this.currentUser?.name?.charAt(0)?.toUpperCase() || 'U';
   }
 
-  toggleSidebar(): void {
-    this.sidebarOpen = !this.sidebarOpen;
-  }
-
-  toggleProfileMenu(): void {
-    this.isProfileMenuOpen = !this.isProfileMenuOpen;
-  }
+  toggleSidebar(): void    { this.sidebarOpen = !this.sidebarOpen; }
+  toggleProfileMenu(): void { this.isProfileMenuOpen = !this.isProfileMenuOpen; }
 
   goToNotifications(): void {
-    this.router.navigate(['/elecom-notifications']);
+    if (this.isElecom()) {
+      this.router.navigate(['/elecom-notifications']);
+    } else {
+      this.router.navigate(['/student-notifications']);
+    }
   }
 
   goToElecomSetting(event: Event): void {

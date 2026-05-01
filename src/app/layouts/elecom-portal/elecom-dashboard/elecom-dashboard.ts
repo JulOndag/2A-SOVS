@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ElectionService, Election } from '../../../services/election';
+import { FormsModule } from '@angular/forms';
 
 export interface Activity {
   type: 'user' | 'vote' | 'election' | 'candidate' | 'warning';
@@ -13,24 +14,23 @@ export interface Activity {
 @Component({
   selector: 'app-elecom-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './elecom-dashboard.html',
   styleUrl: './elecom-dashboard.scss',
 })
 export class ElecomDashboard implements OnInit, OnDestroy {
 
   stats = {
-    totalVoters: 0,
-    voted: 0,
-    notVoted: 0,
-    totalCandidates: 0,
-    approvedCandidates: 0,
-    pendingCandidates: 0
+    totalVoters: 0, voted: 0, notVoted: 0,
+    totalCandidates: 0, approvedCandidates: 0, pendingCandidates: 0
   };
 
   activeElection: Election | null = null;
+  upcomingElection: Election | null = null;
   showConfirmModal = false;
   confirmAction: 'start' | 'end' | null = null;
+
+  newElection = { name: '', description: '', startDate: '', endDate: '' };
 
   recentActivities: Activity[] = [
     { type: 'vote',      title: 'New vote cast',       subtitle: 'Anonymous voter — ballot submitted',  time: '11:30 AM' },
@@ -58,8 +58,70 @@ export class ElecomDashboard implements OnInit, OnDestroy {
     });
 
     this.svc.getElections().subscribe(elections => {
-      this.activeElection = elections.find(e => e.status === 'active') || null;
+      this.activeElection   = elections.find(e => e.status === 'active')   || null;
+      this.upcomingElection = elections.find(e => e.status === 'upcoming') || null;
     });
+  }
+
+  createElection(): void {
+    if (!this.newElection.name || !this.newElection.startDate || !this.newElection.endDate) return;
+
+    const payload: Omit<Election, 'id'> = {
+      name: this.newElection.name,
+      description: this.newElection.description,
+      startDate: this.newElection.startDate,
+      endDate: this.newElection.endDate,
+      totalPositions: 7,
+      totalVoters: 0,
+      voted: 0,
+      status: 'upcoming',
+      markAllRead: function (unread: Notification[]): unknown {
+        throw new Error('Function not implemented.');
+      },
+      markNotificationRead: function (n: Notification): unknown {
+        throw new Error('Function not implemented.');
+      },
+      getNotifications: function (role: string): unknown {
+        throw new Error('Function not implemented.');
+      }
+    };
+
+    this.svc.addElection(payload).subscribe(() => {
+      this.addActivity('election', 'Election created', payload.name, this.nowStr());
+      this.newElection = { name: '', description: '', startDate: '', endDate: '' };
+      this.loadStats();
+    });
+  }
+
+  promptStart(): void {
+    if (!this.upcomingElection) return;
+    this.confirmAction = 'start';
+    this.showConfirmModal = true;
+  }
+
+  promptEnd(): void {
+    if (!this.activeElection) return;
+    this.confirmAction = 'end';
+    this.showConfirmModal = true;
+  }
+
+  confirmElectionAction(): void {
+    if (this.confirmAction === 'start' && this.upcomingElection) {
+      const updated: Election = { ...this.upcomingElection, status: 'active' };
+      this.svc.updateElection(updated).subscribe(() => {
+        this.addActivity('election', 'Election started', updated.name, this.nowStr());
+        this.loadStats();
+      });
+    }
+    if (this.confirmAction === 'end' && this.activeElection) {
+      const updated: Election = { ...this.activeElection, status: 'completed' };
+      this.svc.updateElection(updated).subscribe(() => {
+        this.addActivity('election', 'Election ended', updated.name, this.nowStr());
+        this.loadStats();
+      });
+    }
+    this.showConfirmModal = false;
+    this.confirmAction = null;
   }
 
   get participationRate(): number {
@@ -68,33 +130,15 @@ export class ElecomDashboard implements OnInit, OnDestroy {
   }
 
   get statusLabel(): string {
-    return this.activeElection ? 'Active' : 'No Active Election';
+    if (this.activeElection)   return 'Active';
+    if (this.upcomingElection) return 'Ready to Start';
+    return 'No Election';
   }
 
   get statusClass(): string {
-    return this.activeElection ? 'status-active' : 'status-pending';
-  }
-
-  promptStart(): void { this.confirmAction = 'start'; this.showConfirmModal = true; }
-  promptEnd(): void   { this.confirmAction = 'end';   this.showConfirmModal = true; }
-
-  confirmElectionAction(): void {
-    if (!this.activeElection) return;
-    const updated: Election = {
-      ...this.activeElection,
-      status: this.confirmAction === 'end' ? 'completed' : 'active'
-    };
-    this.svc.updateElection(updated).subscribe(() => {
-      this.addActivity(
-        'election',
-        this.confirmAction === 'end' ? 'Election ended' : 'Election started',
-        this.confirmAction === 'end' ? 'Results are being tallied' : 'Voting is now open',
-        this.nowStr()
-      );
-      this.loadStats();
-    });
-    this.showConfirmModal = false;
-    this.confirmAction = null;
+    if (this.activeElection)   return 'status-active';
+    if (this.upcomingElection) return 'status-pending';
+    return 'status-ended';
   }
 
   addActivity(type: Activity['type'], title: string, subtitle: string, time: string): void {

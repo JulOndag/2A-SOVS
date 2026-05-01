@@ -25,7 +25,7 @@ export class StudentDashboard implements OnInit {
 
   ngOnInit(): void {
     const user = this.auth.getCurrentUser();
-    if (!user) return;
+    if (!user) { this.loading = false; return; }
 
     this.svc.getElections().subscribe(elections => {
       this.elections = elections;
@@ -46,7 +46,7 @@ export class StudentDashboard implements OnInit {
   get isRegistered(): boolean         { return !!this.voter; }
   get hasVoted(): boolean             { return this.voter?.hasVoted ?? false; }
 
-  goToVote(election: Election): void { this.router.navigate(['/student-ballot', election.id]); }
+  goToVote(election: Election): void  { this.router.navigate(['/student-ballot', election.id]); }
   goToElections(): void { this.router.navigate(['/student-elections']); }
   goToApply(): void     { this.router.navigate(['/student-apply']); }
   goToResults(): void   { this.router.navigate(['/student-results']); }

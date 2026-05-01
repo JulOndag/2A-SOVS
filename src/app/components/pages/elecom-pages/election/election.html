@@ -14,8 +14,66 @@
     </button>
   </div>
 
+  <!-- ── CREATE AN ELECTION inline card (shown when modal not preferred) ── -->
+  <div class="create-card" *ngIf="showModal">
+    <div class="create-card-header">
+      <h2>{{ isEditMode ? 'Edit Election' : 'Create an Election' }}</h2>
+      <button class="btn-close-inline" (click)="closeModal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="create-body">
+      <div class="create-field-full">
+        <label class="create-label">TITLE: <span class="required">*</span></label>
+        <input class="create-input" type="text" [(ngModel)]="currentElection.name"
+               placeholder="e.g. Student Council Election 2027" />
+      </div>
+
+      <div class="create-field-full">
+        <label class="create-label">DESCRIPTION:</label>
+        <input class="create-input" type="text" [(ngModel)]="currentElection.description"
+               placeholder="Short description" />
+      </div>
+
+      <div class="create-row">
+        <div class="create-field">
+          <label class="create-label">START DATE: <span class="required">*</span></label>
+          <input class="create-input" type="date" [(ngModel)]="currentElection.startDate" />
+        </div>
+        <div class="create-field">
+          <label class="create-label">END DATE: <span class="required">*</span></label>
+          <input class="create-input" type="date" [(ngModel)]="currentElection.endDate" />
+        </div>
+      </div>
+
+      <div class="create-row">
+        <div class="create-field">
+          <label class="create-label">TOTAL POSITIONS:</label>
+          <input class="create-input" type="number" [(ngModel)]="currentElection.totalPositions" min="1" />
+        </div>
+        <div class="create-field">
+          <label class="create-label">STATUS:</label>
+          <select class="create-input" [(ngModel)]="currentElection.status">
+            <option value="upcoming">Upcoming</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="create-actions">
+        <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+        <button class="btn-start" (click)="saveElection()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          {{ isEditMode ? 'UPDATE ELECTION' : 'START ELECTION' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Active Election Banner -->
-  <div class="active-banner" *ngIf="activeElection">
+  <div class="active-banner" *ngIf="activeElection && !showModal">
     <div class="banner-left">
       <div class="active-dot"></div>
       <div>
@@ -26,8 +84,8 @@
     <button class="btn btn-danger" (click)="endElection(activeElection)">End Election</button>
   </div>
 
-  <!-- Turnout Progress (only when active) -->
-  <div class="progress-section" *ngIf="activeElection">
+  <!-- Turnout Progress -->
+  <div class="progress-section" *ngIf="activeElection && !showModal">
     <div class="progress-header">
       <span>Voter turnout — {{ activeElection.name }}</span>
       <span class="pct">{{ turnoutPercent }}%</span>
@@ -43,131 +101,81 @@
   </div>
 
   <!-- Elections Table -->
-  <div class="section-header">
-    <span class="section-label">All Elections</span>
-    <span class="section-count">{{ elections.length }} records</span>
-  </div>
-
-  <div class="table-container">
-    <table class="elections-table">
-      <thead>
-        <tr>
-          <th>Election</th>
-          <th>Period</th>
-          <th>Positions</th>
-          <th>Turnout</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let election of elections">
-          <td>
-            <div class="election-info">
-              <span class="name">{{ election.name }}</span>
-              <span class="desc">{{ election.description }}</span>
-            </div>
-          </td>
-          <td class="muted">{{ election.startDate }} — {{ election.endDate }}</td>
-          <td>{{ election.totalPositions }}</td>
-          <td>
-            <div class="turnout-cell">
-              <div class="mini-bar">
-                <div class="mini-fill" [style.width.%]="getTurnout(election)"></div>
-              </div>
-              <span class="turnout-pct">{{ getTurnout(election) }}%</span>
-            </div>
-          </td>
-          <td>
-            <span class="status-badge"
-                  [class.badge-active]="election.status === 'active'"
-                  [class.badge-upcoming]="election.status === 'upcoming'"
-                  [class.badge-completed]="election.status === 'completed'">
-              {{ getStatusLabel(election.status) }}
-            </span>
-          </td>
-          <td>
-            <div class="action-buttons">
-              <button class="btn-icon btn-view" (click)="viewElection(election)" title="View">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              </button>
-              <button class="btn-icon btn-edit" (click)="editElection(election)" title="Edit"
-                      [disabled]="election.status === 'active'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-              </button>
-              <button class="btn-icon btn-start" (click)="startElection(election)" title="Start"
-                      *ngIf="election.status === 'upcoming'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              </button>
-              <button class="btn-icon btn-stop" (click)="endElection(election)" title="End"
-                      *ngIf="election.status === 'active'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
-              </button>
-              <button class="btn-icon btn-delete" (click)="deleteElection(election)" title="Delete"
-                      [disabled]="election.status === 'active'">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="empty-state" *ngIf="elections.length === 0">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      <h3>No elections yet</h3>
-      <p>Create your first election to get started</p>
+  <div *ngIf="!showModal">
+    <div class="section-header">
+      <span class="section-label">All Elections</span>
+      <span class="section-count">{{ elections.length }} records</span>
     </div>
-  </div>
 
-  <!-- Add/Edit Modal -->
-  <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
-      <div class="modal-header">
-        <h2>{{ isEditMode ? 'Edit Election' : 'New Election' }}</h2>
-        <button class="btn-close" (click)="closeModal()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label>Election Name <span class="required">*</span></label>
-          <input type="text" [(ngModel)]="currentElection.name" name="name" placeholder="e.g. Student Council Election 2027" />
-        </div>
-        <div class="form-group">
-          <label>Description</label>
-          <input type="text" [(ngModel)]="currentElection.description" name="description" placeholder="Short description" />
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Start Date <span class="required">*</span></label>
-            <input type="date" [(ngModel)]="currentElection.startDate" name="startDate" />
-          </div>
-          <div class="form-group">
-            <label>End Date <span class="required">*</span></label>
-            <input type="date" [(ngModel)]="currentElection.endDate" name="endDate" />
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Total Positions</label>
-            <input type="number" [(ngModel)]="currentElection.totalPositions" name="positions" min="1" />
-          </div>
-          <div class="form-group">
-            <label>Status</label>
-            <select [(ngModel)]="currentElection.status" name="status">
-              <option value="upcoming">Upcoming</option>
-              <option value="active">Active</option>
-              <option value="completed">Completed</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn-cancel" (click)="closeModal()">Cancel</button>
-        <button class="btn-save" (click)="saveElection()">
-          {{ isEditMode ? 'Update' : 'Create' }} Election
-        </button>
+    <div class="table-container">
+      <table class="elections-table">
+        <thead>
+          <tr>
+            <th>Election</th>
+            <th>Period</th>
+            <th>Positions</th>
+            <th>Turnout</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let election of elections">
+            <td>
+              <div class="election-info">
+                <span class="name">{{ election.name }}</span>
+                <span class="desc">{{ election.description }}</span>
+              </div>
+            </td>
+            <td class="muted">{{ election.startDate }} — {{ election.endDate }}</td>
+            <td>{{ election.totalPositions }}</td>
+            <td>
+              <div class="turnout-cell">
+                <div class="mini-bar">
+                  <div class="mini-fill" [style.width.%]="getTurnout(election)"></div>
+                </div>
+                <span class="turnout-pct">{{ getTurnout(election) }}%</span>
+              </div>
+            </td>
+            <td>
+              <span class="status-badge"
+                    [class.badge-active]="election.status === 'active'"
+                    [class.badge-upcoming]="election.status === 'upcoming'"
+                    [class.badge-completed]="election.status === 'completed'">
+                {{ getStatusLabel(election.status) }}
+              </span>
+            </td>
+            <td>
+              <div class="action-buttons">
+                <button class="btn-icon btn-view" (click)="viewElection(election)" title="View">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+                <button class="btn-icon btn-edit" (click)="editElection(election)" title="Edit"
+                        [disabled]="election.status === 'active'">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                </button>
+                <button class="btn-icon btn-start" (click)="startElection(election)" title="Start"
+                        *ngIf="election.status === 'upcoming'">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </button>
+                <button class="btn-icon btn-stop" (click)="endElection(election)" title="End"
+                        *ngIf="election.status === 'active'">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                </button>
+                <button class="btn-icon btn-delete" (click)="deleteElection(election)" title="Delete"
+                        [disabled]="election.status === 'active'">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="empty-state" *ngIf="elections.length === 0">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <h3>No elections yet</h3>
+        <p>Create your first election to get started</p>
       </div>
     </div>
   </div>
