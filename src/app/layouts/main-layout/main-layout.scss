@@ -6,21 +6,23 @@ $blue-600: #2952cc;
 $blue-500: #3b6ef0;
 $blue-400: #6b90f5;
 $blue-100: #e8eeff;
-$blue-50:  #f0f4ff;
+$blue-50: #f0f4ff;
 
-$surface:  #ffffff;
-$bg:       #f5f7fc;
-$border:   #e4e9f5;
-$text:     #0d1f4e;
-$muted:    #7a89b0;
-$danger:   #e5534b;
+$surface: #ffffff;
+$bg: #f5f7fc;
+$border: #e4e9f5;
+$text: #0d1f4e;
+$muted: #7a89b0;
+$danger: #e5534b;
 
 $sidebar-w: 220px;
-$topbar-h:  56px;
-$radius:    8px;
+$topbar-h: 56px;
+$radius: 8px;
 
 // ── Reset helpers ──────────────────────────────────────────────
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 // ── Login ──────────────────────────────────────────────────────
 .login-wrapper {
@@ -38,144 +40,135 @@ $radius:    8px;
   font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
+.login-wrapper {
+  height: 100vh;
+  width: 100%;
+}
+
+.app-layout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #f4f6f9;
+}
+
 // ── Sidebar ───────────────────────────────────────────────────
 .sidebar {
-  width: $sidebar-w;
-  min-width: $sidebar-w;
+  width: 240px;
+  min-width: 240px;
   height: 100vh;
-  background: $blue-900;
+  background: #181824;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  overflow-x: hidden;
-  transition: transform 0.25s ease;
+  transition: transform 0.3s ease;
   z-index: 100;
-  flex-shrink: 0;
 }
 
-// ── Logo ──────────────────────────────────────────────────────
 .logo-section {
-  padding: 20px 16px 18px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 24px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
   img {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     display: block;
-    background: rgba(255,255,255,0.1);
   }
 
   h2 {
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
     color: #fff;
-    margin: 0 0 3px;
-    letter-spacing: 0.01em;
+    margin: 0 0 4px 0;
   }
 
   .logo-subtitle {
     font-size: 11px;
-    color: rgba(255, 255, 255, 0.38);
+    color: rgba(255, 255, 255, 0.45);
     margin: 0;
-    letter-spacing: 0.01em;
   }
 }
 
-// ── Nav Menu ──────────────────────────────────────────────────
 .menu {
   list-style: none;
-  padding: 10px 10px;
+  padding: 12px 0;
   margin: 0;
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
 
   li {
     display: flex;
     align-items: center;
-    gap: 9px;
-    padding: 9px 10px;
+    gap: 10px;
+    padding: 12px 20px;
     font-size: 13px;
-    font-weight: 450;
-    color: rgba(255, 255, 255, 0.52);
+    color: rgba(255, 255, 255, 0.65);
     cursor: pointer;
-    border-radius: 6px;
-    transition: background 0.15s, color 0.15s;
-    letter-spacing: 0.01em;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
 
     svg {
-      width: 15px;
-      height: 15px;
+      width: 16px;
+      height: 16px;
       flex-shrink: 0;
-      opacity: 0.75;
-      transition: opacity 0.15s;
     }
 
     &:hover {
-      background: rgba(255, 255, 255, 0.06);
-      color: rgba(255, 255, 255, 0.85);
-
-      svg { opacity: 1; }
+      background: rgba(255, 255, 255, 0.07);
+      color: #fff;
     }
 
     &.active {
-      background: $blue-600;
-      color: #fff;
-      font-weight: 500;
-
-      svg { opacity: 1; }
+      background: rgba(34, 200, 76, 0.12);
+      color: #22c84c;
+      border-left-color: #22c84c;
+      font-weight: 600;
     }
   }
 }
 
-// ── Sidebar Footer ────────────────────────────────────────────
 .sidebar-footer {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 
   .avatar {
-    width: 30px;
-    height: 30px;
-    border-radius: 6px;
-    background: $blue-600;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #22c84c;
     color: #fff;
-    font-weight: 600;
-    font-size: 12px;
+    font-weight: 700;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    letter-spacing: 0.02em;
   }
 
   .user-name {
-    font-size: 12px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.88);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
   }
 
   .user-role {
     font-size: 11px;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.45);
   }
 }
 
-// ── Overlay (mobile) ──────────────────────────────────────────
+// ── Overlay ───────────────────────────────────────────────────
 .overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 99;
 }
 
@@ -185,51 +178,49 @@ $radius:    8px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  min-width: 0;
 }
 
 // ── Topbar ────────────────────────────────────────────────────
 .content-header {
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  height: $topbar-h;
-  background: $surface;
-  border-bottom: 1px solid $border;
-  gap: 14px;
+  padding: 0 24px;
+  height: 64px;
+  background: #dadada;
+  border-bottom: 1px solid #e8eaed;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  gap: 16px;
   flex-shrink: 0;
 }
 
 .hamburger {
   background: none;
   border: none;
-  font-size: 18px;
+  font-size: 20px;
   cursor: pointer;
-  color: $muted;
+  color: #444;
   display: none;
-  padding: 5px 7px;
+  padding: 4px 8px;
   border-radius: 6px;
-  line-height: 1;
-  transition: background 0.15s;
 
-  &:hover { background: $bg; color: $text; }
+  &:hover {
+    background: #f4f6f9;
+  }
 }
 
 .header-left {
   flex: 1;
-  min-width: 0;
 
   h1.content-title {
-    font-size: 14px;
-    font-weight: 600;
-    color: $text;
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a1a2e;
     margin: 0;
-    letter-spacing: 0.01em;
   }
 
   p.content-subtitle {
-    font-size: 11.5px;
-    color: $muted;
+    font-size: 12px;
+    color: #888;
     margin: 0;
   }
 }
@@ -237,126 +228,106 @@ $radius:    8px;
 .topbar-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 }
 
-// ── Notification icon ─────────────────────────────────────────
 .notification-icon {
   position: relative;
   cursor: pointer;
-  color: $muted;
+  color: #555;
   display: flex;
   align-items: center;
-  padding: 6px;
-  border-radius: 6px;
-  transition: background 0.15s, color 0.15s;
 
   &:hover {
-    background: $blue-50;
-    color: $blue-600;
+    color: #1a1a2e;
   }
 
   .badge {
     position: absolute;
-    top: 2px;
-    right: 2px;
-    background: $danger;
+    top: -4px;
+    right: -6px;
+    background: #e53e3e;
     color: #fff;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 700;
     border-radius: 50%;
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1.5px solid $surface;
   }
 }
 
-// ── Profile Dropdown ──────────────────────────────────────────
 .profile-dropdown {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   cursor: pointer;
   position: relative;
-  padding: 5px 9px;
-  border-radius: 7px;
-  border: 1px solid $border;
-  transition: background 0.15s, border-color 0.15s;
-  background: $surface;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.2s;
 
   &:hover {
-    background: $blue-50;
-    border-color: $blue-100;
+    background: #f4f6f9;
   }
 
   .profile-avatar-text {
-    width: 26px;
-    height: 26px;
-    border-radius: 5px;
-    background: $blue-600;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #22c84c;
     color: #fff;
-    font-weight: 600;
-    font-size: 11px;
+    font-weight: 700;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    letter-spacing: 0.03em;
   }
 
   .profile-name {
     font-size: 13px;
-    font-weight: 500;
-    color: $text;
+    font-weight: 600;
+    color: #333;
   }
 
   .dropdown-icon {
-    font-size: 9px;
-    color: $muted;
-    margin-left: 2px;
+    font-size: 10px;
+    color: #888;
   }
 
   .dropdown-menu {
     display: none;
     position: absolute;
-    top: calc(100% + 6px);
+    top: calc(100% + 8px);
     right: 0;
-    background: $surface;
-    border: 1px solid $border;
-    border-radius: $radius;
-    box-shadow: 0 4px 16px rgba(13, 31, 78, 0.1);
+    background: #fff;
+    border: 1px solid #e8eaed;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
     list-style: none;
-    padding: 4px;
+    padding: 6px 0;
     min-width: 140px;
     z-index: 200;
 
-    &.show { display: block; }
+    &.show {
+      display: block;
+    }
 
     li {
-      padding: 8px 12px;
+      padding: 10px 16px;
       font-size: 13px;
-      color: $text;
+      color: #333;
       cursor: pointer;
-      border-radius: 5px;
       border-left: none;
       background: none;
       font-weight: normal;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: background 0.12s;
 
       &:hover {
-        background: $blue-50;
-        color: $blue-700;
-      }
-
-      &:last-child {
-        color: $danger;
-        &:hover { background: #fff2f2; color: $danger; }
+        background: #f4f6f9;
+        color: #1a1a2e;
       }
     }
   }
@@ -366,13 +337,15 @@ $radius:    8px;
 .content-body {
   flex: 1;
   overflow-y: auto;
-  padding: 24px;
-  background: $bg;
+  padding: 0;
+  background: #f4f6f9;
 }
 
 // ── Responsive ────────────────────────────────────────────────
 @media (max-width: 768px) {
-  .hamburger { display: flex; }
+  .hamburger {
+    display: block;
+  }
 
   .sidebar {
     position: fixed;
@@ -380,11 +353,12 @@ $radius:    8px;
     top: 0;
     transform: translateX(-100%);
 
-    &.active { transform: translateX(0); }
+    &.active {
+      transform: translateX(0);
+    }
   }
 
-  .overlay { display: block; }
-
-  .content-body { padding: 16px; }
+  .overlay {
+    display: block;
+  }
 }
-

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ElectionService, Election, Voter } from '../../../../services/election';
-import { Auth } from '../../../../services/auth';
+import { AuthService } from '../../../../services/auth';
 import { FormsModule } from '@angular/forms';
 
 export interface Candidate {
@@ -37,7 +37,7 @@ export class StudentBallot implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private svc: ElectionService,
-    public auth: Auth
+    public auth: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -79,9 +79,10 @@ export class StudentBallot implements OnInit {
         });
       });
 
-      this.positions = Array.from(positionMap.entries()).map(
-        ([name, cands]) => ({ name, candidates: cands })
-      );
+      this.positions = Array.from(positionMap.entries()).map(([name, cands]) => ({
+        name,
+        candidates: cands,
+      }));
 
       this.loading = false;
     });
@@ -100,9 +101,7 @@ export class StudentBallot implements OnInit {
   }
 
   get progressPercent(): number {
-    return this.totalPositions
-      ? (this.answeredCount / this.totalPositions) * 100
-      : 0;
+    return this.totalPositions ? (this.answeredCount / this.totalPositions) * 100 : 0;
   }
 
   getInitials(name: string): string {

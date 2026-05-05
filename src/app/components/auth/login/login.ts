@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { Auth } from '../../../services/auth';
+import { AuthService } from '../../../services/auth';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,14 +12,32 @@ import Swal from 'sweetalert2';
   imports: [FormsModule, CommonModule],
   templateUrl: './login.html',
   styleUrls: ['./login.scss'],
+  host: { style: 'display: block; width: 100%; height: 100vh;' },
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   identifier = '';
   password = '';
   error: string | null = null;
   loading = false;
 
-  constructor(private auth: Auth, private router: Router) {}
+  private platformId = inject(PLATFORM_ID); // ✅ ADDED
+
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+  ) {}
+
+  ngOnInit(): void {
+    // ✅ wrap in isPlatformBrowser so it only runs in browser, not SSR
+    if (isPlatformBrowser(this.platformId)) {
+      if (localStorage.getItem('isLoggedIn') === 'true') {
+        const role = this.auth.getRole();
+        if (role === 'admin') this.router.navigate(['/app/admin-dashboard']);
+        else if (role === 'elecom') this.router.navigate(['/app/elecom-dashboard']);
+        else if (role === 'student') this.router.navigate(['/app/student-dashboard']);
+      }
+    }
+  }
 
   login() {
     this.error = null;
@@ -36,15 +55,17 @@ export class LoginComponent {
 
         if (users.length > 0) {
           const user = users[0];
-
           localStorage.setItem('user', JSON.stringify(user));
           localStorage.setItem('isLoggedIn', 'true');
 
           const roleLabel =
-            user.role === 'admin' ? 'Administrator' :
-            user.role === 'elecom' ? 'Electoral Commission' :
-            user.role === 'student' ? 'Student' :
-            'Unknown';
+            user.role === 'admin'
+              ? 'Administrator'
+              : user.role === 'elecom'
+                ? 'Electoral Commission'
+                : user.role === 'student'
+                  ? 'Student'
+                  : 'Unknown';
 
           Swal.fire({
             icon: 'success',
@@ -52,20 +73,17 @@ export class LoginComponent {
             text: `Welcome, ${roleLabel}!`,
             timer: 1500,
             showConfirmButton: false,
-          });
-
-          setTimeout(() => {
+          }).then(() => {
             if (user.role === 'admin') {
-              this.router.navigate(['/admin-dashboard']);
+              this.router.navigate(['/app/admin-dashboard']);
             } else if (user.role === 'elecom') {
-              this.router.navigate(['/elecom-dashboard']);
+              this.router.navigate(['/app/elecom-dashboard']);
             } else if (user.role === 'student') {
-              this.router.navigate(['/student-dashboard']);
+              this.router.navigate(['/app/student-dashboard']);
             } else {
               this.router.navigate(['/login']);
             }
-          }, 1500);
-
+          });
         } else {
           this.error = 'Invalid email or password';
         }

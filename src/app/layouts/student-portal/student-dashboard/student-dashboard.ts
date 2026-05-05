@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { Auth } from '../../../services/auth';
+import { AuthService } from '../../../services/auth';
 import { ElectionService, Election, Voter, Application } from '../../../services/election';
 
 @Component({
@@ -18,16 +18,19 @@ export class StudentDashboard implements OnInit {
   loading = true;
 
   constructor(
-    public auth: Auth,
+    public auth: AuthService,
     private svc: ElectionService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     const user = this.auth.getCurrentUser();
-    if (!user) { this.loading = false; return; }
+    if (!user) {
+      this.loading = false;
+      return;
+    }
 
-    this.svc.getElections().subscribe(elections => {
+    this.svc.getElections().subscribe((elections) => {
       this.elections = elections;
     });
 
@@ -41,13 +44,29 @@ export class StudentDashboard implements OnInit {
     });
   }
 
-  get activeElections(): Election[]   { return this.elections.filter(e => e.status === 'active'); }
-  get upcomingElections(): Election[] { return this.elections.filter(e => e.status === 'upcoming'); }
-  get isRegistered(): boolean         { return !!this.voter; }
-  get hasVoted(): boolean             { return this.voter?.hasVoted ?? false; }
+  get activeElections(): Election[] {
+    return this.elections.filter((e) => e.status === 'active');
+  }
+  get upcomingElections(): Election[] {
+    return this.elections.filter((e) => e.status === 'upcoming');
+  }
+  get isRegistered(): boolean {
+    return !!this.voter;
+  }
+  get hasVoted(): boolean {
+    return this.voter?.hasVoted ?? false;
+  }
 
-  goToVote(election: Election): void  { this.router.navigate(['/student-ballot', election.id]); }
-  goToElections(): void { this.router.navigate(['/student-elections']); }
-  goToApply(): void     { this.router.navigate(['/student-apply']); }
-  goToResults(): void   { this.router.navigate(['/student-results']); }
+  goToVote(election: Election): void {
+    this.router.navigate(['/student-ballot', election.id]);
+  }
+  goToElections(): void {
+    this.router.navigate(['/student-elections']);
+  }
+  goToApply(): void {
+    this.router.navigate(['/student-apply']);
+  }
+  goToResults(): void {
+    this.router.navigate(['/student-results']);
+  }
 }

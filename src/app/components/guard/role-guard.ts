@@ -24,11 +24,11 @@ export class RoleGuard implements CanActivate {
     }
 
     if (user.role === 'admin') {
-      this.router.navigate(['/admin-dashboard']);
+      this.router.navigate(['/app/admin-dashboard']);
     } else if (user.role === 'elecom') {
-      this.router.navigate(['/elecom-dashboard']);
+      this.router.navigate(['/app/elecom-dashboard']);
     } else if (user.role === 'student') {
-      this.router.navigate(['/student-dashboard']);
+      this.router.navigate(['/app/student-dashboard']);
     } else {
       this.router.navigate(['/login']);
     }

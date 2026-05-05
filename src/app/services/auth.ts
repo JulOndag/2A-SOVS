@@ -1,57 +1,55 @@
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
+export type UserRole = 'admin' | 'elecom' | 'student';
+
 export interface User {
-  id: number;
-  name: string;
+  id: string;
   email: string;
-  password: string;
-  role: string;
+  role: UserRole;
+  name: string;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
-export class Auth {
-  private apiUrl = 'http://localhost:3000/users';
-  private platformId = inject(PLATFORM_ID);
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private apiUrl = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
-  login(identifier: string, password: string): Observable<User[]> {
-    return this.http.get<User[]>(
-      `${this.apiUrl}?email=${identifier}&password=${password}`
-    );
-  }
-
-  getCurrentUser(): User | null {
-    if (!isPlatformBrowser(this.platformId)) return null;
-    const user = localStorage.getItem('user');
-    return user ? (JSON.parse(user) as User) : null;
-  }
-
-  isAdmin(): boolean {
-    return this.getCurrentUser()?.role === 'admin';
-  }
-
-  isElecom(): boolean {
-    return this.getCurrentUser()?.role === 'elecom';
-  }
-
-  isStudent(): boolean {
-    return this.getCurrentUser()?.role === 'student';
-  }
-
-  isLoggedIn(): boolean {
-    if (!isPlatformBrowser(this.platformId)) return false;
-    return localStorage.getItem('isLoggedIn') === 'true';
+  login(email: string, password: string): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/users?email=${email}&password=${password}`);
   }
 
   logout(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
     localStorage.removeItem('user');
     localStorage.removeItem('isLoggedIn');
+    this.router.navigate(['/login']);
+  }
+
+  getCurrentUser(): User | null {
+    const raw = localStorage.getItem('user');
+    return raw ? JSON.parse(raw) : null;
+  }
+
+  isLoggedIn(): boolean {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  }
+
+  getRole(): UserRole | null {
+    return this.getCurrentUser()?.role ?? null;
+  }
+
+  redirectByRole(role: UserRole): void {
+    const routeMap: Record<UserRole, string> = {
+      admin: '/admin-dashboard',
+      elecom: '/elecom-dashboard',
+      student: '/student-dashboard',
+    };
+    this.router.navigate([routeMap[role]]);
   }
 }

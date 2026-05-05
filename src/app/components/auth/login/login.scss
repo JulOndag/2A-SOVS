@@ -14,7 +14,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
     background-size: 30px 30px;
     pointer-events: none;
   }
@@ -45,7 +45,9 @@
     line-height: 1.05;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
 
-    span { color: #22c84c; }
+    span {
+      color: #22c84c;
+    }
   }
 
   .school-name {
@@ -120,7 +122,9 @@ h1 {
   border-radius: 12px;
   padding: 12px 14px;
   margin-bottom: 14px;
-  transition: border-color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
 
   &:focus-within {
     border-color: rgba(34, 200, 76, 0.6);
@@ -147,7 +151,9 @@ h1 {
     font-size: 14px;
     width: 100%;
 
-    &::placeholder { color: rgba(255, 255, 255, 0.35); }
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
   }
 }
 
@@ -193,8 +199,13 @@ h1 {
     justify-content: center;
     padding: 24px;
   }
-  .left-panel, .ghost-text { display: none; }
-  .login-card { max-width: 100%; }
+  .left-panel,
+  .ghost-text {
+    display: none;
+  }
+  .login-card {
+    max-width: 100%;
+  }
 }
 .OSVE {
   position: absolute;

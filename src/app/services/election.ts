@@ -124,7 +124,7 @@ export class ElectionService {
     return this.http.delete<void>(`${this.base}/voters/${id}`);
   }
 
-  getElections(numericId: number): Observable<Election[]> {
+  getElections(numericId?: number): Observable<Election[]> {
     return this.http.get<Election[]>(`${this.base}/elections`);
   }
   getActiveElection(): Observable<Election[]> {
@@ -164,27 +164,31 @@ export class ElectionService {
     voter: Voter,
     election: Election,
     votes: { [position: string]: string },
-    candidates: Candidate[]
+    candidates: Candidate[],
   ): Observable<any> {
     const record: Omit<VoteRecord, 'id'> = {
       studentId: voter.studentId,
       electionId: election.id,
       votes,
-      submittedAt: new Date().toISOString()
+      submittedAt: new Date().toISOString(),
     };
 
-    const candidateUpdates = Object.values(votes).map(candidateId => {
-      const candidate = candidates.find(c => c.id === candidateId);
+    const candidateUpdates = Object.values(votes).map((candidateId) => {
+      const candidate = candidates.find((c) => c.id === candidateId);
       if (!candidate) throw new Error(`Candidate ${candidateId} not found`);
       return this.updateCandidate({ ...candidate, votes: candidate.votes + 1 });
     });
 
-    return this.http.post(`${this.base}/voteRecords`, record).pipe(
-      switchMap(() => forkJoin([
-        ...candidateUpdates,
-        this.updateVoter({ ...voter, hasVoted: true, verifiedAt: new Date().toISOString() }),
-        this.updateElection({ ...election, voted: election.voted + 1 })
-      ]))
-    );
+    return this.http
+      .post(`${this.base}/voteRecords`, record)
+      .pipe(
+        switchMap(() =>
+          forkJoin([
+            ...candidateUpdates,
+            this.updateVoter({ ...voter, hasVoted: true, verifiedAt: new Date().toISOString() }),
+            this.updateElection({ ...election, voted: election.voted + 1 }),
+          ]),
+        ),
+      );
   }
 }

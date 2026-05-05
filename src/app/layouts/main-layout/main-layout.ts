@@ -1,7 +1,7 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
-import { Auth, User } from '../../services/auth';
+import { AuthService, User } from '../../services/auth';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,9 +10,9 @@ import Swal from 'sweetalert2';
   imports: [CommonModule, RouterOutlet, RouterModule, RouterLink, RouterLinkActive],
   templateUrl: './main-layout.html',
   styleUrls: ['./main-layout.scss'],
+  host: { style: 'display: block; width: 100%; height: 100vh;' },
 })
 export class MainLayout implements OnInit {
-  isLoginRoute = false;
   sidebarOpen = false;
   isProfileMenuOpen = false;
   unseenCount = 0;
@@ -20,13 +20,15 @@ export class MainLayout implements OnInit {
 
   private platformId = inject(PLATFORM_ID);
 
-  constructor(public auth: Auth, private router: Router) {}
+  constructor(
+    public auth: AuthService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
-    this.checkRoute();
     this.loadUser();
+
     this.router.events.subscribe(() => {
-      this.checkRoute();
       this.loadUser();
       this.isProfileMenuOpen = false;
       this.sidebarOpen = false;
@@ -37,38 +39,51 @@ export class MainLayout implements OnInit {
     this.currentUser = this.auth.getCurrentUser();
   }
 
-  checkRoute(): void {
-    const url = this.router.url;
-    this.isLoginRoute = url === '/login' || url === '/';
+  isElecom(): boolean {
+    return this.currentUser?.role === 'elecom';
   }
 
-  // Methods (not getters) so HTML can call auth.isElecom() and isElecom()
-  isElecom(): boolean  { return this.currentUser?.role === 'elecom'; }
-  isStudent(): boolean { return this.currentUser?.role === 'student'; }
+  isStudent(): boolean {
+    return this.currentUser?.role === 'student';
+  }
 
   getUserName(): string {
-    return this.currentUser?.name || 'User';
+    return this.currentUser?.name || 'admin';
   }
 
   getUserInitial(): string {
     return this.currentUser?.name?.charAt(0)?.toUpperCase() || 'U';
   }
 
-  toggleSidebar(): void    { this.sidebarOpen = !this.sidebarOpen; }
-  toggleProfileMenu(): void { this.isProfileMenuOpen = !this.isProfileMenuOpen; }
+  toggleSidebar(): void {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  toggleProfileMenu(): void {
+    this.isProfileMenuOpen = !this.isProfileMenuOpen;
+  }
 
   goToNotifications(): void {
     if (this.isElecom()) {
-      this.router.navigate(['/elecom-notifications']);
-    } else {
-      this.router.navigate(['/student-notifications']);
+      this.router.navigate(['/app/elecom-notifications']);
     }
   }
 
-  goToElecomSetting(event: Event): void {
+  // ✅ ADDED — this is what the HTML calls
+  goToSettings(event: Event): void {
     event.stopPropagation();
     this.isProfileMenuOpen = false;
-    this.router.navigate(['/elecom-settings']);
+    const role = this.auth.getRole();
+    if (role === 'admin') {
+      this.router.navigate(['/app/admin-settings']);
+    } else if (role === 'elecom') {
+      this.router.navigate(['/app/elecom-settings']);
+    }
+  }
+
+  // kept for backwards compat if anything still calls it
+  goToElecomSetting(event: Event): void {
+    this.goToSettings(event);
   }
 
   logout(): void {
@@ -80,7 +95,7 @@ export class MainLayout implements OnInit {
       confirmButtonColor: '#7B1C2E',
       cancelButtonColor: '#c0392b',
       confirmButtonText: 'Yes, logout!',
-      cancelButtonText: 'Cancel'
+      cancelButtonText: 'Cancel',
     }).then((result) => {
       if (result.isConfirmed) {
         this.auth.logout();
@@ -88,7 +103,7 @@ export class MainLayout implements OnInit {
           title: 'Logged out!',
           icon: 'success',
           timer: 1500,
-          showConfirmButton: false
+          showConfirmButton: false,
         }).then(() => {
           this.router.navigate(['/login']);
         });
